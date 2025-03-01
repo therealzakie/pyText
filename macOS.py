@@ -85,7 +85,7 @@ elif theme == "light":
     ct_window = light_window
     ct_font = light_font
 else:
-    messagebox.showerror(title = "Error", message = "Please change the contents of 'current_theme.txt' in the directory 'settings/theme' to 'light'.")
+    messagebox.showerror(title = "Error", message = "Please change the contents of 'current_theme.txt' in the directory 'settings/theme' to 'dark' or 'light'.")
     root.destroy()
 
 root.config(bg = ct_main)
