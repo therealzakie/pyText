@@ -24,14 +24,14 @@ light_main = "#ffffff"
 light_alt0 = "#c3c3c3"
 light_alt1 = "#1c1c1c"
 light_text = "#000000" 
-light_pallet = "themes/light/pallet.png"
+light_window = "themes/light/window.png"
 light_font = "themes/light/font.png"
 
 dark_main = "#333333"
 dark_alt0 = "#222222"
 dark_alt1 = "#8c8c8c"
 dark_text = "#ffffff"
-dark_pallet = "themes/dark/pallet.png"
+dark_window = "themes/dark/window.png"
 dark_font = "themes/dark/font.png"
 
 tab1 = " "
@@ -75,14 +75,14 @@ if theme == "dark":
     ct_alt0 = dark_alt0
     ct_alt1 = dark_alt1
     ct_text = dark_text
-    ct_pallet = dark_pallet
+    ct_window = dark_window
     ct_font = dark_font
 elif theme == "light":
     ct_main = light_main
     ct_alt0 = light_alt0
     ct_alt1 = light_alt1
     ct_text = light_text
-    ct_pallet = light_pallet
+    ct_window = light_window
     ct_font = light_font
 else:
     messagebox.showerror(title = "Error", message = "Please change the contents of 'current_theme.txt' in the directory 'settings/theme' to 'light'.")
@@ -121,7 +121,7 @@ def themes_page():
         root.destroy()
 
     themes_frame = Frame(settings_display, bg = ct_main)
-    Label(themes_frame, text = "Themes Settings", font = (current_font, 20), bg = ct_main, fg = ct_text).pack(side = TOP)
+    Label(themes_frame, text = "Window Settings", font = (current_font, 20), bg = ct_main, fg = ct_text).pack(side = TOP)
 
     # Theme
 
@@ -211,8 +211,8 @@ def open_settings():
     settings_menu.resizable(False, False)
 
     # Images
-    pallet_picture = Image.open(ct_pallet)
-    pallet_png = ImageTk.PhotoImage(pallet_picture)
+    window_picture = Image.open(ct_window)
+    window_png = ImageTk.PhotoImage(window_picture)
     font_picture = Image.open(ct_font)
     font_png = ImageTk.PhotoImage(font_picture)
 
@@ -225,12 +225,12 @@ def open_settings():
 
     Label(master = settings_menu,text = "Settings", bg = ct_alt0, font = (current_font, 25), fg = ct_text).place(x = 3, y = 0)
 
-    themes_image_btn = tkmacosx.Button(settings_side_nav_frame, image = pallet_png, bg = ct_alt0, command = lambda: hide_all_frames(themes_page), borderless=1, font = (current_font, 12))
-    themes_image_btn.image = pallet_png
+    themes_image_btn = tkmacosx.Button(settings_side_nav_frame, image = window_png, bg = ct_alt0, command = lambda: hide_all_frames(themes_page), borderless=1, font = (current_font, 12))
+    themes_image_btn.image = window_png
     themes_image_btn.place(x = 20, y = 50)
 
     fonts_image_btn = tkmacosx.Button(settings_side_nav_frame, image = font_png, bg = ct_alt0, command = lambda: hide_all_frames(fonts_page), borderless=1, font = (current_font, 12))
-    fonts_image_btn.image = pallet_png
+    fonts_image_btn.image = font_png
     fonts_image_btn.place(x = 20, y = 100)
 
     # Main Screen
