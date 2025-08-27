@@ -56,6 +56,8 @@ with open("settings/theme/current_theme.txt") as theme_file:
     theme = theme_file.read()
     print(f"DEBUG --- Current theme is {theme}.")
 
+root.config(bg = ct_main)
+
 # Functions
 
 def themes_page():
