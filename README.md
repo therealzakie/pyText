@@ -15,21 +15,8 @@ We want to make a **light-weight** text editor made with **Python**, a simple to
 - Closing safety, so you don't press Control + W on accident and lose everything
 - Dark mode
 
-### Upcoming features:
-
-#### Higher priority
-
-- pyText documentation Links inside pyText
-- Creation of local copies of pyText documentation inside pyText
-- Customizable default window size
-- Tab length customization
-
-#### Lower priority
-
-- **Bold**, *Italic* and <u>Underline</u> text
-- Highlights (with custom colours!)
-
 ## Documenation
 
+[Plan Path](https://github.com/therealzakie/pyText/blob/master/documentation/plan-path.md)
 [Keybinds](https://github.com/therealzakie/pyText/blob/master/documentation/keybinds/keybinds.md)
 [Features](https://github.com/therealzakie/pyText/blob/master/documentation/features/features.md)
