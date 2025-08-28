@@ -10,10 +10,10 @@
 - ~~Font Styles~~
 - ~~Font Sizes~~
 - ~~pyText Documentation~~
+- ~~Links to pyText Documentation inside pyText client~~
 
 ## Upcoming
 
-- Links to pyText Documentation inside pyText client
 - Ability to create local/offline versions of pyText Documentation
 - Ability to change default window size
 - Tab length customization incase tabs are too small or too big
