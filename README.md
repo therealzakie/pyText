@@ -6,7 +6,7 @@ A simple text editor with Python!
 
 ## The mission of pyText:
 
-We want to make a **light-weight** text editor made with **Python**, a simple to use/install programming language which was perfect for implementing features, customization and bug fixes! So **you** can build your own themes, fix bugs **yourself** and submit them in GitHub, **and so on!** This project is **open-source** so you can easily view the whole code without downloading a single file! Since people like convenince, for **macOS exclusively\***, there is an .app file you can install to run pyText as simply as hitting the icon twice!
+We want to make a **light-weight** text editor made with **Python**, a simple to use/install programming language which was perfect for implementing features, customization and bug fixes! So **you** can build your own themes, fix bugs **yourself** and submit them in GitHub, **and so on!** This project is **open-source** so you can easily view the whole code without downloading a single file!
 
 ## Keybinds:
 <details>
