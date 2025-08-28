@@ -21,6 +21,8 @@ We want to make a **light-weight** text editor made with **Python**, a simple to
 
 - pyText documentation Links inside pyText
 - Creation of local copies of pyText documentation inside pyText
+- Customizable default window size
+- Tab length customization
 
 #### Lower priority
 

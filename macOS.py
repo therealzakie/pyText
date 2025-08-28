@@ -8,6 +8,7 @@ TODO:
 
 from tkinter import *
 from tkinter import filedialog, messagebox, font
+from tkinter.font import Font
 from PIL import Image, ImageTk
 import tkmacosx
 from tkinter import ttk
@@ -319,6 +320,9 @@ scroll_bar.pack(side = RIGHT, fill = Y)
 
 text = Text(root, yscrollcommand = scroll_bar.set, undo = True, bg = ct_main, fg = ct_text, font = (current_font, current_font_size))
 text.bind("<<Modified>>", on_text_change)
+font = Font(font=text['font'])
+tab = font.measure("    ")
+text.config(tabs = tab)
 text.pack(fill = BOTH, expand = True)
 
 scroll_bar.config(command = text.yview)
