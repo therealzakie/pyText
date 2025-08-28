@@ -10,6 +10,7 @@ from tkinter import *
 from tkinter import filedialog, messagebox, font
 from PIL import Image, ImageTk
 import tkmacosx
+from tkinter import ttk
 global save_delete_used
 save_delete_used = True
 
@@ -23,34 +24,17 @@ light_alt0 = "#c3c3c3"
 light_alt1 = "#1c1c1c"
 light_text = "#000000" 
 light_pallet = "themes/light/pallet.png"
+light_font = "themes/light/font.png"
 
 dark_main = "#333333"
 dark_alt0 = "#222222"
 dark_alt1 = "#8c8c8c"
 dark_text = "#ffffff"
 dark_pallet = "themes/dark/pallet.png"
+dark_font = "themes/dark/font.png"
 
 ct_option_current_option = StringVar(root)
-
-with open("settings/theme/current_theme.txt") as theme_file:
-    theme = theme_file.read()
-    print(f"DEBUG --- Current theme is {theme}.")
-
-if theme == "dark":
-    ct_main = dark_main
-    ct_alt0 = dark_alt0
-    ct_alt1 = dark_alt1
-    ct_text = dark_text
-    ct_pallet = dark_pallet
-elif theme == "light":
-    ct_main = light_main
-    ct_alt0 = light_alt0
-    ct_alt1 = light_alt1
-    ct_text = light_text
-    ct_pallet = light_pallet
-else:
-    messagebox.showerror(title = "Error", message = "Please change the contents of 'current_theme.txt' in the directory 'settings/theme' to 'light'.")
-    root.destroy()
+ct_entry_current_option = StringVar(root)
 
 with open("settings/theme/current_theme.txt") as theme_file:
     theme = theme_file.read()
@@ -59,6 +43,28 @@ with open("settings/theme/current_theme.txt") as theme_file:
 with open("settings/theme/current_font.txt") as font_file:
     current_font = font_file.read()
     print(f"DEBUG --- Current font is {current_font}.")
+
+with open("settings/theme/current_font_size.txt") as font_file:
+    current_font_size = font_file.read()
+    print(f"DEBUG --- Current font size is {current_font_size}.")
+
+if theme == "dark":
+    ct_main = dark_main
+    ct_alt0 = dark_alt0
+    ct_alt1 = dark_alt1
+    ct_text = dark_text
+    ct_pallet = dark_pallet
+    ct_font = dark_font
+elif theme == "light":
+    ct_main = light_main
+    ct_alt0 = light_alt0
+    ct_alt1 = light_alt1
+    ct_text = light_text
+    ct_pallet = light_pallet
+    ct_font = light_font
+else:
+    messagebox.showerror(title = "Error", message = "Please change the contents of 'current_theme.txt' in the directory 'settings/theme' to 'light'.")
+    root.destroy()
 
 root.config(bg = ct_main)
 
@@ -95,34 +101,42 @@ def fonts_page():
             new_font = f"{ct_option_current_option.get()}"
             font_file.write(new_font)
             messagebox.showinfo(title = "Completed", message = "Restart pyText to change the font.")
+    def confirm_font_size():
+        with open("settings/theme/current_font_size.txt", "w") as font_file:
+            new_font_size = f"{ct_entry.get()}"
+            font_file.write(new_font_size)
+            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the font size.")
     ct_option_options = font.families()
     ct_list_options = []
     for fonterson in ct_option_options:
         ct_list_options.append(fonterson)
     ct_list_options.append("TkDefaultFont")
     fonts_frame = Frame(settings_display, bg = ct_main)
-    Label(fonts_frame, text = "Fonts Settings", font = (current_font, 15), bg = ct_main, fg = ct_text).pack(side = TOP)
+    Label(fonts_frame, text = "Fonts Settings", font = (current_font, 20), bg = ct_main, fg = ct_text).pack(side = TOP)
     
+    # Font Selection
+    Label(fonts_frame, text = "Font", font = (current_font, 15), bg = ct_main, fg = ct_text).pack()
     ct_option = OptionMenu(fonts_frame, ct_option_current_option, current_font, *ct_list_options)
     ct_option.config(bg = ct_main, fg = ct_text)
-    ct_option.pack(side = LEFT)
-    ct_confirm = tkmacosx.Button(fonts_frame, text = "Set Font", command = confirm_font, borderless=1, bg = ct_alt1, font = (current_font, 12))
+    ct_option.pack()
+    ct_confirm = tkmacosx.Button(fonts_frame, text = "Set Font", command = confirm_font, borderless = 1, bg = ct_alt1, font = (current_font, 15))
     ct_confirm.config(fg = ct_text)
-    ct_confirm.config(bg = ct_main)
-    ct_confirm.pack(side = RIGHT)
+    ct_confirm.pack()
+
+    # Font Size
+    Label(fonts_frame, text = "Font Size", font = (current_font, 15), bg = ct_main, fg = ct_text).pack()
+    Label(fonts_frame, text = "(Only changes font-size in the editor)", font = (current_font, 10), bg = ct_main, fg = ct_text).pack()
+    ct_entry = Entry(fonts_frame)
+    ct_entry.config(bg = ct_alt1, fg = ct_text, font = (current_font, 15))
+    ct_entry.pack()
+    ct_confirm1 = tkmacosx.Button(fonts_frame, text = "Set Font Size", command = confirm_font_size, borderless = 1, bg = ct_alt1, font = (current_font, 15))
+    ct_confirm1.config(fg = ct_text)
+    ct_confirm1.pack()
     fonts_frame.pack(pady = 20)
 
-def hide_all_indicators():
-    tib_indicator.config(bg = ct_alt0)
-
-def hide_all_frames():
+def hide_all_frames(page):
     for frame in settings_display.winfo_children():
         frame.destroy()
-
-def show_indicator(indicator, page):
-    hide_all_indicators()
-    hide_all_frames()
-    indicator.config(bg = ct_alt1)
     page()
 
 def when_closing(event):
@@ -130,7 +144,7 @@ def when_closing(event):
 
 def when_X_clicked():
     if save_delete_used == False:
-        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, use task manager to close.")
+        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Command+Q'.")
     else:
         close_pyText()
 
@@ -146,6 +160,8 @@ def open_settings():
     # Images
     pallet_picture = Image.open(ct_pallet)
     pallet_png = ImageTk.PhotoImage(pallet_picture)
+    font_picture = Image.open(ct_font)
+    font_png = ImageTk.PhotoImage(font_picture)
 
     # Side Nav
 
@@ -156,21 +172,13 @@ def open_settings():
 
     Label(master = settings_menu,text = "Settings", bg = ct_alt0, font = (current_font, 25), fg = ct_text).place(x = 3, y = 0)
 
-    themes_image_btn = tkmacosx.Button(settings_side_nav_frame, image = pallet_png, bg = ct_alt0, command = lambda: show_indicator(tib_indicator, themes_page), borderless=1, font = (current_font, 12))
+    themes_image_btn = tkmacosx.Button(settings_side_nav_frame, image = pallet_png, bg = ct_alt0, command = lambda: hide_all_frames(themes_page), borderless=1, font = (current_font, 12))
     themes_image_btn.image = pallet_png
     themes_image_btn.place(x = 20, y = 50)
 
-    fonts_image_btn = tkmacosx.Button(settings_side_nav_frame, image = pallet_png, bg = ct_alt0, command = lambda: show_indicator(tib_indicator, fonts_page), borderless=1, font = (current_font, 12))
+    fonts_image_btn = tkmacosx.Button(settings_side_nav_frame, image = font_png, bg = ct_alt0, command = lambda: hide_all_frames(fonts_page), borderless=1, font = (current_font, 12))
     fonts_image_btn.image = pallet_png
     fonts_image_btn.place(x = 20, y = 100)
-
-    global tib_indicator
-    tib_indicator = Label(settings_side_nav_frame, text = " ", bg = ct_alt0)
-    tib_indicator.place(x = 1, y = 50, width = 5, height = 40)
-
-    global fib_indicator
-    fib_indicator = Label(settings_side_nav_frame, text = " ", bg = ct_alt0)
-    fib_indicator.place(x = 1, y = 100, width = 5, height = 40)
 
     # Main Screen
 
@@ -228,7 +236,7 @@ def on_text_change(event):
 
 def close_pyText():
     if save_delete_used == False:
-        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, use task manager to close.")
+        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Command+Q'.")
     else:
         close_question = messagebox.askquestion(title = "Would you like to close pyText?", message = "Would you like to close pyText?", icon = "question")
         if close_question == "yes":
@@ -309,13 +317,13 @@ def new_file():
 scroll_bar = Scrollbar(root)
 scroll_bar.pack(side = RIGHT, fill = Y)
 
-text = Text(root, yscrollcommand = scroll_bar.set, undo = True, bg = ct_main, fg = ct_text, font = (current_font, 15))
+text = Text(root, yscrollcommand = scroll_bar.set, undo = True, bg = ct_main, fg = ct_text, font = (current_font, current_font_size))
 text.bind("<<Modified>>", on_text_change)
 text.pack(fill = BOTH, expand = True)
 
 scroll_bar.config(command = text.yview)
 
-# Menu-bar
+# Menu Bar
 
 menu_bar = Menu(root)
 
