@@ -11,36 +11,63 @@ We want to make a **light-weight** text editor made with **Python**, a simple to
 ## Keybinds:
 <details>
 <summary>Windows/Linux</summary>
-<!-- Table -->
-| Key | Function |
-|------|------|
-| Ctrl + N | New file |
-| Ctrl + O | Open file |
-| Ctrl + S | Save file |
-| Alt + S | Save as file |
-| Ctrl + D | Discard file |
-| Ctrl + C | Copy selected text |
-| Ctrl + X | Copy selected text and remove it |
-| Ctrl + V | Pastes copied text |
-| Ctrl + A | Select all text in document |
-| Ctrl + / | Open pyText settings |
-| Ctrl + W | Close pyText |
+<!---->
+ Ctrl + N - New file 
+
+ Ctrl + O - Open file 
+
+ Ctrl + S - Save file 
+
+ Alt + S - Save as file 
+
+ Ctrl + D - Discard file 
+
+ Ctrl + C - Copy selected text 
+
+ Ctrl + X - Copy selected text and remove it 
+
+ Ctrl + V - Pastes copied text 
+
+ Ctrl + A - Select all text in document 
+
+ Ctrl + / - Open pyText settings 
+
+ Ctrl + W - Close pyText 
 </details>
 
 <details>
 <summary>macOS</summary>
-<!-- Table -->
-| Key | Function |
-|------|------|
-| Cmd + N | New file |
-| Cmd + O | Open file |
-| Cmd + S | Save file |
-| Opt + S | Save as file |
-| Cmd + D | Discard file |
-| Cmd + C | Copy selected text |
-| Cmd + X | Copy selected text and remove it |
-| Cmd + V | Pastes copied text |
-| Cmd + A | Select all text in document |
-| Cmd + / | Open pyText settings |
-| Cmd + W | Close pyText |
+<!---->
+ Cmd + N - New file 
+
+ Cmd + O - Open file 
+
+ Cmd + S - Save file 
+
+ Opt + S - Save as file 
+
+ Cmd + D - Discard file 
+
+ Cmd + C - Copy selected text 
+
+ Cmd + X - Copy selected text and remove it 
+
+ Cmd + V - Pastes copied text 
+
+ Cmd + A - Select all text in document 
+
+ Cmd + / - Open pyText settings 
+
+ Cmd + W - Close pyText 
 </details>
+
+## Features:
+
+- Font changes
+- Font size changes (for the editor only)
+- Closing safety, so you don't press Control + W on accident and lose everything
+- Dark mode
+
+### Upcoming features:
+- **Bold**, *Italic* and <u>Underline</u> text
+- Highlights (with custom colours!)
