@@ -7,7 +7,7 @@ TODO:
 """
 
 from tkinter import *
-from tkinter import filedialog, messagebox
+from tkinter import filedialog, messagebox, font
 from PIL import Image, ImageTk
 import tkmacosx
 global save_delete_used
@@ -23,12 +23,14 @@ light_alt0 = "#c3c3c3"
 light_alt1 = "#1c1c1c"
 light_text = "#000000" 
 light_pallet = "themes/light/pallet.png"
+light_font = "themes/light/font.png"
 
 dark_main = "#333333"
 dark_alt0 = "#222222"
 dark_alt1 = "#8c8c8c"
 dark_text = "#ffffff"
 dark_pallet = "themes/dark/pallet.png"
+dark_font = "themes/dark/font.png"
 
 ct_option_current_option = StringVar(root)
 
@@ -42,12 +44,14 @@ if theme == "dark":
     ct_alt1 = dark_alt1
     ct_text = dark_text
     ct_pallet = dark_pallet
+    ct_font = dark_font
 elif theme == "light":
     ct_main = light_main
     ct_alt0 = light_alt0
     ct_alt1 = light_alt1
     ct_text = light_text
     ct_pallet = light_pallet
+    ct_font = light_font
 else:
     messagebox.showerror(title = "Error", message = "Please change the contents of 'current_theme.txt' in the directory 'settings/theme' to 'light'.")
     root.destroy()
@@ -55,6 +59,10 @@ else:
 with open("settings/theme/current_theme.txt") as theme_file:
     theme = theme_file.read()
     print(f"DEBUG --- Current theme is {theme}.")
+
+with open("settings/theme/current_font.txt") as font_file:
+    current_font = font_file.read()
+    print(f"DEBUG --- Current font is {current_font}.")
 
 root.config(bg = ct_main)
 
@@ -65,25 +73,48 @@ def themes_page():
         with open("settings/theme/current_theme.txt", "w") as theme_file:
             new_theme = f"{ct_option_current_option.get()}"
             theme_file.write(new_theme)
-            messagebox.showinfo(title = "Completed", message = "Restart the app to change the theme.")
+            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the theme.")
     ct_option_options = ["light", "dark"]
     if theme in ct_option_options:
         ct_option_options.remove(theme)
     else:
         root.destroy()
     themes_frame = Frame(settings_display, bg = ct_main)
-    Label(themes_frame, text = "Themes Settings", font = ("TkDefaultFont", 15), bg = ct_main, fg = ct_text).pack(side = TOP)
+    Label(themes_frame, text = "Themes Settings", font = (current_font, 15), bg = ct_main, fg = ct_text).pack(side = TOP)
 
     # Theme
 
     ct_option = OptionMenu(themes_frame, ct_option_current_option, theme, *ct_option_options)
     ct_option.config(bg = ct_main, fg = ct_text)
     ct_option.pack(side = LEFT)
-    ct_confirm = tkmacosx.Button(themes_frame, text = "Set Theme", command = comfirm_theme, borderless=1, bg = ct_alt1)
+    ct_confirm = tkmacosx.Button(themes_frame, text = "Set Theme", command = comfirm_theme, borderless=1, bg = ct_alt1, font = (current_font, 12))
     ct_confirm.config(fg = ct_text)
     ct_confirm.config(bg = ct_main)
     ct_confirm.pack(side = RIGHT)
     themes_frame.pack(pady = 20)
+
+def fonts_page():
+    def confirm_font():
+        with open("settings/theme/current_font.txt", "w") as font_file:
+            new_font = f"{ct_option_current_option.get()}"
+            font_file.write(new_font)
+            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the font.")
+    ct_option_options = font.families()
+    ct_list_options = []
+    for fonterson in ct_option_options:
+        ct_list_options.append(fonterson)
+    ct_list_options.append("TkDefaultFont")
+    fonts_frame = Frame(settings_display, bg = ct_main)
+    Label(fonts_frame, text = "Fonts Settings", font = (current_font, 15), bg = ct_main, fg = ct_text).pack(side = TOP)
+    
+    ct_option = OptionMenu(fonts_frame, ct_option_current_option, current_font, *ct_list_options)
+    ct_option.config(bg = ct_main, fg = ct_text)
+    ct_option.pack(side = LEFT)
+    ct_confirm = tkmacosx.Button(fonts_frame, text = "Set Font", command = confirm_font, borderless=1, bg = ct_alt1, font = (current_font, 12))
+    ct_confirm.config(fg = ct_text)
+    ct_confirm.config(bg = ct_main)
+    ct_confirm.pack(side = RIGHT)
+    fonts_frame.pack(pady = 20)
 
 def hide_all_indicators():
     tib_indicator.config(bg = ct_alt0)
@@ -119,6 +150,8 @@ def open_settings():
     # Images
     pallet_picture = Image.open(ct_pallet)
     pallet_png = ImageTk.PhotoImage(pallet_picture)
+    font_picture = Image.open(ct_font)
+    font_png = ImageTk.PhotoImage(font_picture)
 
     # Side Nav
 
@@ -127,14 +160,23 @@ def open_settings():
     settings_side_nav_frame.pack_propagate(False)
     settings_side_nav_frame.configure(width = 130, height = 300)
 
-    Label(master = settings_menu,text = "Settings", bg = ct_alt0, font = ("TkDefaultFont", 25), fg = ct_text).place(x = 3, y = 0)
-    themes_image_btn = tkmacosx.Button(settings_side_nav_frame, image = pallet_png, bg = ct_alt0, command = lambda: show_indicator(tib_indicator, themes_page), borderless=1)
+    Label(master = settings_menu,text = "Settings", bg = ct_alt0, font = (current_font, 25), fg = ct_text).place(x = 3, y = 0)
+
+    themes_image_btn = tkmacosx.Button(settings_side_nav_frame, image = pallet_png, bg = ct_alt0, command = lambda: show_indicator(tib_indicator, themes_page), borderless=1, font = (current_font, 12))
     themes_image_btn.image = pallet_png
     themes_image_btn.place(x = 20, y = 50)
+
+    fonts_image_btn = tkmacosx.Button(settings_side_nav_frame, image = font_png, bg = ct_alt0, command = lambda: show_indicator(tib_indicator, fonts_page), borderless=1, font = (current_font, 12))
+    fonts_image_btn.image = pallet_png
+    fonts_image_btn.place(x = 20, y = 100)
 
     global tib_indicator
     tib_indicator = Label(settings_side_nav_frame, text = " ", bg = ct_alt0)
     tib_indicator.place(x = 1, y = 50, width = 5, height = 40)
+
+    global fib_indicator
+    fib_indicator = Label(settings_side_nav_frame, text = " ", bg = ct_alt0)
+    fib_indicator.place(x = 1, y = 100, width = 5, height = 40)
 
     # Main Screen
 
@@ -273,7 +315,7 @@ def new_file():
 scroll_bar = Scrollbar(root)
 scroll_bar.pack(side = RIGHT, fill = Y)
 
-text = Text(root, yscrollcommand = scroll_bar.set, undo = True, bg = ct_main, fg = ct_text)
+text = Text(root, yscrollcommand = scroll_bar.set, undo = True, bg = ct_main, fg = ct_text, font = (current_font, 15))
 text.bind("<<Modified>>", on_text_change)
 text.pack(fill = BOTH, expand = True)
 
@@ -328,4 +370,5 @@ root.bind("<Command-w>", when_closing)
 
 root.protocol("WM_DELETE_WINDOW", when_X_clicked)
 root.config(menu = menu_bar)
+
 root.mainloop()
