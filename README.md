@@ -1,6 +1,6 @@
 # pyText
 
-A simple text editor for Python!
+A simple text editor with Python!
 
 <img style="width: 50%;" src="images/showcase1dark.png" alt="a showcase of pyText in dark mode">
 
