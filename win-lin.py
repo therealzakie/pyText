@@ -12,6 +12,7 @@ from tkinter.font import Font
 from PIL import Image, ImageTk
 import tkmacosx
 from tkinter import ttk
+import webbrowser as web
 global save_delete_used
 save_delete_used = True
 
@@ -313,6 +314,27 @@ def new_file():
     else:
         text.delete("1.0", END)
 
+def open_source():
+    web.open("https://github.com/therealzakie/pyText", new = 2)
+
+def open_source_key(event):
+    open_source()
+
+def open_readme():
+    web.open("https://github.com/therealzakie/pyText/blob/master/README.md", new = 2)
+
+def open_df_closing_safety():
+    web.open("https://github.com/therealzakie/pyText/blob/master/documentation/features/closingsafety.md", new = 2)
+
+def open_df_themes():
+    web.open("https://github.com/therealzakie/pyText/blob/master/documentation/features/themes.md", new = 2)
+
+def open_df_fonts():
+    web.open("https://github.com/therealzakie/pyText/blob/master/documentation/features/font.md", new = 2)
+
+def open_keybinds():
+    web.open("https://github.com/therealzakie/pyText/blob/master/documentation/keybinds/keybinds_windows_linux.md", new = 2)
+
 # Basic text editor and scroll-bar
 
 scroll_bar = Scrollbar(root)
@@ -337,7 +359,7 @@ file_menu.add_separator()
 file_menu.add_command(label = "Open", command = open_file, accelerator = "Ctrl+O")
 file_menu.add_separator()
 file_menu.add_command(label = "Save", command = save_file, accelerator = "Ctrl+S")
-file_menu.add_command(label = "Save As", command = save_as_file, accelerator = "Ctrl+S")
+file_menu.add_command(label = "Save As", command = save_as_file, accelerator = "Alt+S")
 file_menu.add_separator()
 file_menu.add_command(label = "Discard File", command = discard_file, accelerator = "Ctrl+D")
 menu_bar.add_cascade(label = "File", menu = file_menu)
@@ -356,6 +378,19 @@ format_menu.add_command(label = "Italic Text", command = italic_text, accelerato
 format_menu.add_command(label = "Underline Text", command = underline_text, accelerator = "Ctrl+U")
 menu_bar.add_cascade(label = "Format", menu = format_menu)
 
+docs_menu = Menu(menu_bar, tearoff = False)
+docs_menu.add_command(label = "Source Code", command = open_source, accelerator = "Ctrl+G")
+docs_menu.add_command(label = "READ ME", command = open_readme)
+
+docs_features_menu = Menu(docs_menu, tearoff = False)
+docs_features_menu.add_command(label = "Closing Safety", command = open_df_closing_safety)
+docs_features_menu.add_command(label = "Themes", command = open_df_themes)
+docs_features_menu.add_command(label = "Fonts", command = open_df_fonts)
+docs_menu.add_cascade(label = "Features", menu = docs_features_menu)
+
+docs_menu.add_command(label = "Keybinds", command = open_keybinds)
+menu_bar.add_cascade(label = "Documentation", menu = docs_menu)
+
 options_menu = Menu(menu_bar, tearoff = False)
 options_menu.add_command(label = "pyText Setttings", command = open_settings, accelerator = "Ctrl+/")
 options_menu.add_command(label = "Close pyText", command = close_pyText, accelerator = "Ctrl+W")
@@ -371,6 +406,7 @@ root.bind("<Control-d>", discard_key)
 root.bind("<Control-b>", bolden_key)
 root.bind("<Control-i>", italic_key)
 root.bind("<Control-u>", underline_key)
+root.bind("<Control-g>", open_source_key)
 root.bind("<Control-/>", settings_key)
 root.bind("<Control-w>", when_closing)
 
