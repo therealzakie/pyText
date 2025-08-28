@@ -17,3 +17,5 @@
 - Ability to create local/offline versions of pyText Documentation
 - Ability to change default window size
 - Tab length customization incase tabs are too small or too big
+- **Bold**, *Italic* and <u>Underline</u> text
+- Highlights (with custom colours)
