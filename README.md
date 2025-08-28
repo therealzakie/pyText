@@ -29,5 +29,5 @@ We want to make a **light-weight** text editor made with **Python**, a simple to
 
 ## Documenation
 
-[Keybinds]()
-[Features]()
+[Keybinds](https://github.com/therealzakie/pyText/blob/master/documentation/keybinds/keybinds.md)
+[Features](https://github.com/therealzakie/pyText/blob/master/documentation/features/features.md)
