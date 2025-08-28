@@ -26,3 +26,8 @@ We want to make a **light-weight** text editor made with **Python**, a simple to
 
 - **Bold**, *Italic* and <u>Underline</u> text
 - Highlights (with custom colours!)
+
+## Documenation
+
+[Keybinds]()
+[Features]()
