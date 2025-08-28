@@ -17,6 +17,6 @@ We want to make a **light-weight** text editor made with **Python**, a simple to
 
 ## Documenation
 
-[Plan Path](https://github.com/therealzakie/pyText/blob/master/documentation/plan-path.md)
+[Plan Path](https://github.com/therealzakie/pyText/blob/master/plan-path.md)
 [Keybinds](https://github.com/therealzakie/pyText/blob/master/documentation/keybinds/keybinds.md)
 [Features](https://github.com/therealzakie/pyText/blob/master/documentation/features/features.md)
