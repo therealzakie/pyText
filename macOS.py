@@ -13,6 +13,7 @@ from PIL import Image, ImageTk
 import tkmacosx
 from tkinter import ttk
 import webbrowser as web
+import os
 global save_delete_used
 save_delete_used = True
 
@@ -49,6 +50,10 @@ with open("settings/theme/current_font.txt") as font_file:
 with open("settings/theme/current_font_size.txt") as font_file:
     current_font_size = font_file.read()
     print(f"DEBUG --- Current font size is {current_font_size}.")
+
+with open("settings/general/documentation_type.txt") as doc_file:
+    current_doc_type = doc_file.read()
+    print(f"DEBUG --- Current documentation type is {current_doc_type}.")
 
 if theme == "dark":
     ct_main = dark_main
@@ -91,7 +96,7 @@ def themes_page():
     ct_option = OptionMenu(themes_frame, ct_option_current_option, theme, *ct_option_options)
     ct_option.config(bg = ct_main, fg = ct_text)
     ct_option.pack(side = LEFT)
-    ct_confirm = tkmacosx.Button(themes_frame, text = "Set Theme", command = comfirm_theme, borderless=1, bg = ct_alt1, font = (current_font, 12))
+    ct_confirm = tkmacosx.Button(themes_frame, text = "Set Theme", command = comfirm_theme, borderless=1, bg = ct_alt1, font = (current_font, 15))
     ct_confirm.config(fg = ct_text)
     ct_confirm.config(bg = ct_main)
     ct_confirm.pack(side = RIGHT)
@@ -136,6 +141,47 @@ def fonts_page():
     ct_confirm1.pack()
     fonts_frame.pack(pady = 20)
 
+def documentation_page():
+    def confirm_documenation():
+        with open("settings/general/documentation_type.txt", "w") as doc_file:
+            new_option = f"{ct_option_current_option.get()}"
+            doc_file.write(new_option)
+            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the documentation type.")
+    def download_docs():
+        # try:
+            os.system("cd")
+            os.system("git clone -n --depth=1 --filter=tree:0 https://github.com/therealzakie/pyText.git/")
+            os.system("cd pyText")
+            os.system("git sparse-checkout set --no-cone /documentation")
+            os.system("git checkout")
+            messagebox.showinfo(title = "Please restart to apply changes.", message = "Please restart pyText to apply changes.")
+        # except:
+            # messagebox.showerror(title = "Error", message = "git is not installed. Please run 'brew install git' in the terminal.")
+    ct_option_options = ["Online", "Offline"]
+    if current_doc_type in ct_option_options:
+        ct_option_options.remove(current_doc_type)
+    else:
+        root.destroy()
+    doc_frame = Frame(settings_display, bg = ct_main)
+    Label(doc_frame, text = "Documentation Settings", font = (current_font, 20), bg = ct_main, fg = ct_text).grid()
+
+    # Documentation Type
+
+    Label(doc_frame, text = "Documentation Type", font = (current_font, 15), bg = ct_main, fg = ct_text).grid()
+
+    ct_option = OptionMenu(doc_frame, ct_option_current_option, current_doc_type, *ct_option_options)
+    ct_option.config(bg = ct_main, fg = ct_text)
+    ct_option.grid()
+    ct_confirm = tkmacosx.Button(doc_frame, text = "Set Documentation Type", command = confirm_documenation, borderless=1, bg = ct_alt1, font = (current_font, 15))
+    ct_confirm.config(fg = ct_text)
+    ct_confirm.config(bg = ct_main)
+    ct_confirm.grid()
+
+    download_alert = Label(doc_frame, text = "Offline Documentation needs downloaded.", ).grid()
+    download_btn = Button(doc_frame, text = "Download", command = download_docs, ).grid()
+
+    doc_frame.pack(pady = 20)
+
 def hide_all_frames(page):
     for frame in settings_display.winfo_children():
         frame.destroy()
@@ -174,7 +220,7 @@ def open_settings():
 
     Label(master = settings_menu,text = "Settings", bg = ct_alt0, font = (current_font, 25), fg = ct_text).place(x = 3, y = 0)
 
-    themes_image_btn = tkmacosx.Button(settings_side_nav_frame, image = pallet_png, bg = ct_alt0, command = lambda: hide_all_frames(themes_page), borderless=1, font = (current_font, 12))
+    themes_image_btn = tkmacosx.Button(settings_side_nav_frame, image = pallet_png, bg = ct_alt0, command = lambda: hide_all_frames(documentation_page), borderless=1, font = (current_font, 12))
     themes_image_btn.image = pallet_png
     themes_image_btn.place(x = 20, y = 50)
 
@@ -342,8 +388,8 @@ scroll_bar.pack(side = RIGHT, fill = Y)
 
 text = Text(root, yscrollcommand = scroll_bar.set, undo = True, bg = ct_main, fg = ct_text, font = (current_font, current_font_size))
 text.bind("<<Modified>>", on_text_change)
-font = Font(font=text['font'])
-tab = font.measure("    ")
+fonter = Font(font=text['font'])
+tab = fonter.measure("    ")
 text.config(tabs = tab)
 text.pack(fill = BOTH, expand = True)
 
@@ -387,7 +433,7 @@ docs_features_menu.add_command(label = "Closing Safety", command = open_df_closi
 docs_features_menu.add_command(label = "Themes", command = open_df_themes)
 docs_features_menu.add_command(label = "Fonts", command = open_df_fonts)
 docs_menu.add_cascade(label = "Features", menu = docs_features_menu)
-docs_menu.add_separator
+docs_menu.add_separator()
 docs_menu.add_command(label = "Keybinds", command = open_keybinds)
 menu_bar.add_cascade(label = "Documentation", menu = docs_menu)
 

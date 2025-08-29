@@ -10,7 +10,7 @@
 - ~~Font Styles~~
 - ~~Font Sizes~~
 - ~~pyText Documentation~~
-- ~~Links to pyText Documentation inside pyText client~~
+- ~~Links to pyText Documentation inside pyText client~~    
 
 ## Upcoming
 
