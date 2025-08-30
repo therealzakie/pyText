@@ -10,7 +10,6 @@ from tkinter import *
 from tkinter import filedialog, messagebox, font
 from tkinter.font import Font
 from PIL import Image, ImageTk
-import tkmacosx
 from tkinter import ttk
 import webbrowser as web
 global save_delete_used
@@ -91,7 +90,7 @@ def themes_page():
     ct_option = OptionMenu(themes_frame, ct_option_current_option, theme, *ct_option_options)
     ct_option.config(bg = ct_main, fg = ct_text)
     ct_option.pack(side = LEFT)
-    ct_confirm = tkmacosx.Button(themes_frame, text = "Set Theme", command = comfirm_theme, borderless=1, bg = ct_alt1, font = (current_font, 12))
+    ct_confirm = Button(themes_frame, text = "Set Theme", command = comfirm_theme, borderless=1, bg = ct_alt1, font = (current_font, 12))
     ct_confirm.config(fg = ct_text)
     ct_confirm.config(bg = ct_main)
     ct_confirm.pack(side = RIGHT)
@@ -121,7 +120,7 @@ def fonts_page():
     ct_option = OptionMenu(fonts_frame, ct_option_current_option, current_font, *ct_list_options)
     ct_option.config(bg = ct_main, fg = ct_text)
     ct_option.pack()
-    ct_confirm = tkmacosx.Button(fonts_frame, text = "Set Font", command = confirm_font, borderless = 1, bg = ct_alt1, font = (current_font, 15))
+    ct_confirm = Button(fonts_frame, text = "Set Font", command = confirm_font, borderless = 1, bg = ct_alt1, font = (current_font, 15))
     ct_confirm.config(fg = ct_text)
     ct_confirm.pack()
 
@@ -131,7 +130,7 @@ def fonts_page():
     ct_entry = Entry(fonts_frame)
     ct_entry.config(bg = ct_alt1, fg = ct_text, font = (current_font, 15))
     ct_entry.pack()
-    ct_confirm1 = tkmacosx.Button(fonts_frame, text = "Set Font Size", command = confirm_font_size, borderless = 1, bg = ct_alt1, font = (current_font, 15))
+    ct_confirm1 = Button(fonts_frame, text = "Set Font Size", command = confirm_font_size, borderless = 1, bg = ct_alt1, font = (current_font, 15))
     ct_confirm1.config(fg = ct_text)
     ct_confirm1.pack()
     fonts_frame.pack(pady = 20)
@@ -174,17 +173,17 @@ def open_settings():
 
     Label(master = settings_menu,text = "Settings", bg = ct_alt0, font = (current_font, 25), fg = ct_text).place(x = 3, y = 0)
 
-    themes_image_btn = tkmacosx.Button(settings_side_nav_frame, image = pallet_png, bg = ct_alt0, command = lambda: hide_all_frames(themes_page), borderless=1, font = (current_font, 12))
+    themes_image_btn = Button(settings_side_nav_frame, image = pallet_png, bg = ct_alt0, command = lambda: hide_all_frames(themes_page), borderless=1, font = (current_font, 12))
     themes_image_btn.image = pallet_png
     themes_image_btn.place(x = 20, y = 50)
 
-    fonts_image_btn = tkmacosx.Button(settings_side_nav_frame, image = font_png, bg = ct_alt0, command = lambda: hide_all_frames(fonts_page), borderless=1, font = (current_font, 12))
+    fonts_image_btn = Button(settings_side_nav_frame, image = font_png, bg = ct_alt0, command = lambda: hide_all_frames(fonts_page), borderless=1, font = (current_font, 12))
     fonts_image_btn.image = pallet_png
     fonts_image_btn.place(x = 20, y = 100)
 
     # Main Screen
 
-    global settings_display
+    global settings_displayg
     settings_display = Frame(settings_menu, bg = ct_main)
     settings_display.pack(side = LEFT)
     settings_display.pack_propagate(False)
