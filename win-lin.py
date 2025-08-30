@@ -183,7 +183,7 @@ def open_settings():
 
     # Main Screen
 
-    global settings_displayg
+    global settings_display
     settings_display = Frame(settings_menu, bg = ct_main)
     settings_display.pack(side = LEFT)
     settings_display.pack_propagate(False)
