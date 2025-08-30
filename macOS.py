@@ -141,47 +141,6 @@ def fonts_page():
     ct_confirm1.pack()
     fonts_frame.pack(pady = 20)
 
-def documentation_page():
-    def confirm_documenation():
-        with open("settings/general/documentation_type.txt", "w") as doc_file:
-            new_option = f"{ct_option_current_option.get()}"
-            doc_file.write(new_option)
-            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the documentation type.")
-    def download_docs():
-        # try:
-            os.system("cd")
-            os.system("git clone -n --depth=1 --filter=tree:0 https://github.com/therealzakie/pyText.git/")
-            os.system("cd pyText")
-            os.system("git sparse-checkout set --no-cone /documentation")
-            os.system("git checkout")
-            messagebox.showinfo(title = "Please restart to apply changes.", message = "Please restart pyText to apply changes.")
-        # except:
-            # messagebox.showerror(title = "Error", message = "git is not installed. Please run 'brew install git' in the terminal.")
-    ct_option_options = ["Online", "Offline"]
-    if current_doc_type in ct_option_options:
-        ct_option_options.remove(current_doc_type)
-    else:
-        root.destroy()
-    doc_frame = Frame(settings_display, bg = ct_main)
-    Label(doc_frame, text = "Documentation Settings", font = (current_font, 20), bg = ct_main, fg = ct_text).grid()
-
-    # Documentation Type
-
-    Label(doc_frame, text = "Documentation Type", font = (current_font, 15), bg = ct_main, fg = ct_text).grid()
-
-    ct_option = OptionMenu(doc_frame, ct_option_current_option, current_doc_type, *ct_option_options)
-    ct_option.config(bg = ct_main, fg = ct_text)
-    ct_option.grid()
-    ct_confirm = tkmacosx.Button(doc_frame, text = "Set Documentation Type", command = confirm_documenation, borderless=1, bg = ct_alt1, font = (current_font, 15))
-    ct_confirm.config(fg = ct_text)
-    ct_confirm.config(bg = ct_main)
-    ct_confirm.grid()
-
-    download_alert = Label(doc_frame, text = "Offline Documentation needs downloaded.", ).grid()
-    download_btn = Button(doc_frame, text = "Download", command = download_docs, ).grid()
-
-    doc_frame.pack(pady = 20)
-
 def hide_all_frames(page):
     for frame in settings_display.winfo_children():
         frame.destroy()
@@ -220,7 +179,7 @@ def open_settings():
 
     Label(master = settings_menu,text = "Settings", bg = ct_alt0, font = (current_font, 25), fg = ct_text).place(x = 3, y = 0)
 
-    themes_image_btn = tkmacosx.Button(settings_side_nav_frame, image = pallet_png, bg = ct_alt0, command = lambda: hide_all_frames(documentation_page), borderless=1, font = (current_font, 12))
+    themes_image_btn = tkmacosx.Button(settings_side_nav_frame, image = pallet_png, bg = ct_alt0, command = lambda: hide_all_frames(themes_page), borderless=1, font = (current_font, 12))
     themes_image_btn.image = pallet_png
     themes_image_btn.place(x = 20, y = 50)
 
@@ -232,7 +191,7 @@ def open_settings():
 
     global settings_display
     settings_display = Frame(settings_menu, bg = ct_main)
-    settings_display.pack(side = LEFT)
+    settings_display.pack(side = LEFT, fill = BOTH)
     settings_display.pack_propagate(False)
     settings_display.configure(width = 400, height = 500)
 
