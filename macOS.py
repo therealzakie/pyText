@@ -51,10 +51,6 @@ with open("settings/theme/current_font_size.txt") as font_file:
     current_font_size = font_file.read()
     print(f"DEBUG --- Current font size is {current_font_size}.")
 
-with open("settings/general/documentation_type.txt") as doc_file:
-    current_doc_type = doc_file.read()
-    print(f"DEBUG --- Current documentation type is {current_doc_type}.")
-
 if theme == "dark":
     ct_main = dark_main
     ct_alt0 = dark_alt0
