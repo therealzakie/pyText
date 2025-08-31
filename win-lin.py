@@ -15,9 +15,34 @@ import webbrowser as web
 global save_delete_used
 save_delete_used = True
 
+with open("settings/theme/current_theme.txt") as theme_file:
+    theme = theme_file.read()
+    print(f"DEBUG --- Current theme is {theme}.")
+
+with open("settings/font/current_font.txt") as font_file:
+    current_font = font_file.read()
+    print(f"DEBUG --- Current font is {current_font}.")
+
+with open("settings/font/current_font_size.txt") as font_file:
+    current_font_size = font_file.read()
+    print(f"DEBUG --- Current font size is {current_font_size}.")
+
+with open("settings/theme/current_tab_size.txt") as tab_file:
+    current_tab_size = tab_file.read()
+    print(f"DEBUG --- Current tab size is {current_tab_size}.")
+
+with open("settings/window/window_size.txt") as window_file:
+    window_size = window_file.read()
+    print(f"DEBUG --- Current window size is {window_size}.")
+
 root = Tk()
-root.geometry("600x600")
-root.minsize(height = 250, width = 250)
+if window_size == "Full Screen":
+    screenwidth = root.winfo_screenwidth()
+    screenheight = root.winfo_screenheight()
+    root.geometry(f"{screenwidth}x{screenheight}")
+else:
+    root.geometry(window_size)
+root.minsize(height = 100, width = 100)
 root.title("pyText")
 
 light_main = "#ffffff"
@@ -52,23 +77,8 @@ tab15 = "               "
 
 ct_option_current_option = StringVar(root)
 ct_option_current_option1 = StringVar(root)
+ct_option_current_option2 = StringVar(root)
 ct_entry_current_option = StringVar(root)
-
-with open("settings/theme/current_theme.txt") as theme_file:
-    theme = theme_file.read()
-    print(f"DEBUG --- Current theme is {theme}.")
-
-with open("settings/font/current_font.txt") as font_file:
-    current_font = font_file.read()
-    print(f"DEBUG --- Current font is {current_font}.")
-
-with open("settings/font/current_font_size.txt") as font_file:
-    current_font_size = font_file.read()
-    print(f"DEBUG --- Current font size is {current_font_size}.")
-
-with open("settings/theme/current_tab_size.txt") as tab_file:
-    current_tab_size = tab_file.read()
-    print(f"DEBUG --- Current tab size is {current_tab_size}.")
 
 if theme == "dark":
     ct_main = dark_main
@@ -104,8 +114,16 @@ def themes_page():
             new_tab_size = f"{ct_option_current_option1.get()}"
             tab_file.write(new_tab_size)
             messagebox.showinfo(title = "Completed", message = "Restart pyText to change the tab size.")
+
+    def confirm_window_size():
+        with open("settings/window/window_size.txt", "w") as win_file:
+            new_window_size = f"{ct_option_current_option2.get()}"
+            win_file.write(new_window_size)
+            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the window size.")
+
     ct_option_options = ["light", "dark"]
     ct_option_options1 = []
+    ct_option_options2 = ["100x100", "200x200", "300x300", "400x400", "500x500", "600x600", "700x700", "800x800", "900x900", "1000x1000", "Full Screen"]
 
     index = 1
 
@@ -141,6 +159,17 @@ def themes_page():
     ct_option1.config(bg = ct_main, fg = ct_text)
     ct_option1.pack()
     ct_confirm1 = Button(themes_frame, text = "Set Tab Size", command = confirm_tab_size, borderless=1, font = (current_font, 15))
+    ct_confirm1.config(fg = ct_text)
+    ct_confirm1.config(bg = ct_alt1)
+    ct_confirm1.pack()
+
+    # Window Size
+
+    Label(themes_frame, text = "Current Window Size", font = (current_font, 15), bg = ct_main, fg = ct_text).pack(side = TOP)
+    ct_option1 = OptionMenu(themes_frame, ct_option_current_option2, current_tab_size, *ct_option_options2)
+    ct_option1.config(bg = ct_main, fg = ct_text)
+    ct_option1.pack()
+    ct_confirm1 = Button(themes_frame, text = "Set Window Size", command = confirm_window_size, borderless=1, font = (current_font, 15))
     ct_confirm1.config(fg = ct_text)
     ct_confirm1.config(bg = ct_alt1)
     ct_confirm1.pack()
