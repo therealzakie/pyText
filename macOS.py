@@ -184,6 +184,7 @@ def fonts_page():
     ct_confirm1 = tkmacosx.Button(fonts_frame, text = "Set Font Size", command = confirm_font_size, borderless = 1, bg = ct_alt1, font = (current_font, 15))
     ct_confirm1.config(fg = ct_text)
     ct_confirm1.pack()
+    
     fonts_frame.pack(pady = 20)
 
 def hide_all_frames(page):
