@@ -34,20 +34,41 @@ dark_text = "#ffffff"
 dark_pallet = "themes/dark/pallet.png"
 dark_font = "themes/dark/font.png"
 
+tab1 = " "
+tab2 = "  "
+tab3 = "   "
+tab4 = "    "
+tab5 = "     "
+tab6 = "      "
+tab7 = "       "
+tab8 = "        "
+tab9 = "         "
+tab10 = "          "
+tab11 = "           "
+tab12 = "            "
+tab13 = "             "
+tab14 = "              "
+tab15 = "               "
+
 ct_option_current_option = StringVar(root)
+ct_option_current_option1 = StringVar(root)
 ct_entry_current_option = StringVar(root)
 
 with open("settings/theme/current_theme.txt") as theme_file:
     theme = theme_file.read()
     print(f"DEBUG --- Current theme is {theme}.")
 
-with open("settings/theme/current_font.txt") as font_file:
+with open("settings/font/current_font.txt") as font_file:
     current_font = font_file.read()
     print(f"DEBUG --- Current font is {current_font}.")
 
-with open("settings/theme/current_font_size.txt") as font_file:
+with open("settings/font/current_font_size.txt") as font_file:
     current_font_size = font_file.read()
     print(f"DEBUG --- Current font size is {current_font_size}.")
+
+with open("settings/theme/current_tab_size.txt") as tab_file:
+    current_tab_size = tab_file.read()
+    print(f"DEBUG --- Current tab size is {current_tab_size}.")
 
 if theme == "dark":
     ct_main = dark_main
@@ -77,33 +98,63 @@ def themes_page():
             new_theme = f"{ct_option_current_option.get()}"
             theme_file.write(new_theme)
             messagebox.showinfo(title = "Completed", message = "Restart pyText to change the theme.")
+
+    def confirm_tab_size():
+        with open("settings/theme/current_tab_size.txt", "w") as tab_file:
+            new_tab_size = f"{ct_option_current_option1.get()}"
+            tab_file.write(new_tab_size)
+            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the tab size.")
     ct_option_options = ["light", "dark"]
+    ct_option_options1 = []
+
+    index = 1
+
+    while index <= 15:
+        ct_option_options1.append(index)
+        index += 1
+
+    print(ct_option_options1)
+
     if theme in ct_option_options:
         ct_option_options.remove(theme)
     else:
         root.destroy()
+
     themes_frame = Frame(settings_display, bg = ct_main)
-    Label(themes_frame, text = "Themes Settings", font = (current_font, 15), bg = ct_main, fg = ct_text).pack(side = TOP)
+    Label(themes_frame, text = "Themes Settings", font = (current_font, 20), bg = ct_main, fg = ct_text).pack(side = TOP)
 
     # Theme
 
+    Label(themes_frame, text = "Current Theme", font = (current_font, 15), bg = ct_main, fg = ct_text).pack(side = TOP)
     ct_option = OptionMenu(themes_frame, ct_option_current_option, theme, *ct_option_options)
     ct_option.config(bg = ct_main, fg = ct_text)
-    ct_option.pack(side = LEFT)
-    ct_confirm = Button(themes_frame, text = "Set Theme", command = comfirm_theme, borderless=1, bg = ct_alt1, font = (current_font, 12))
+    ct_option.pack()
+    ct_confirm = Button(themes_frame, text = "Set Theme", command = comfirm_theme, borderless=1, font = (current_font, 15))
     ct_confirm.config(fg = ct_text)
-    ct_confirm.config(bg = ct_main)
-    ct_confirm.pack(side = RIGHT)
+    ct_confirm.config(bg = ct_alt1)
+    ct_confirm.pack()
+
+    # Tab Size
+
+    Label(themes_frame, text = "Current Tab Size", font = (current_font, 15), bg = ct_main, fg = ct_text).pack(side = TOP)
+    ct_option1 = OptionMenu(themes_frame, ct_option_current_option1, current_tab_size, *ct_option_options1)
+    ct_option1.config(bg = ct_main, fg = ct_text)
+    ct_option1.pack()
+    ct_confirm1 = Button(themes_frame, text = "Set Tab Size", command = confirm_tab_size, borderless=1, font = (current_font, 15))
+    ct_confirm1.config(fg = ct_text)
+    ct_confirm1.config(bg = ct_alt1)
+    ct_confirm1.pack()
+
     themes_frame.pack(pady = 20)
 
 def fonts_page():
     def confirm_font():
-        with open("settings/theme/current_font.txt", "w") as font_file:
+        with open("settings/font/current_font.txt", "w") as font_file:
             new_font = f"{ct_option_current_option.get()}"
             font_file.write(new_font)
             messagebox.showinfo(title = "Completed", message = "Restart pyText to change the font.")
     def confirm_font_size():
-        with open("settings/theme/current_font_size.txt", "w") as font_file:
+        with open("settings/font/current_font_size.txt", "w") as font_file:
             new_font_size = f"{ct_entry.get()}"
             font_file.write(new_font_size)
             messagebox.showinfo(title = "Completed", message = "Restart pyText to change the font size.")
@@ -341,8 +392,39 @@ scroll_bar.pack(side = RIGHT, fill = Y)
 
 text = Text(root, yscrollcommand = scroll_bar.set, undo = True, bg = ct_main, fg = ct_text, font = (current_font, current_font_size))
 text.bind("<<Modified>>", on_text_change)
-font = Font(font=text['font'])
-tab = font.measure("    ")
+fonter = Font(font=text['font'])
+if current_tab_size == "1":
+    tab = fonter.measure(tab1)
+elif current_tab_size == "2":
+    tab = fonter.measure(tab2)
+elif current_tab_size == "3":
+    tab = fonter.measure(tab3)
+elif current_tab_size == "4":
+    tab = fonter.measure(tab4)
+elif current_tab_size == "5":
+    tab = fonter.measure(tab5)
+elif current_tab_size == "6":
+    tab = fonter.measure(tab6)
+elif current_tab_size == "7":
+    tab = fonter.measure(tab7)
+elif current_tab_size == "8":
+    tab = fonter.measure(tab8)
+elif current_tab_size == "9":
+    tab = fonter.measure(tab9)
+elif current_tab_size == "10":
+    tab = fonter.measure(tab10)
+elif current_font_size == "11":
+    tab = fonter.measure(tab11)
+elif current_tab_size == "12":
+    tab = fonter.measure(tab12)
+elif current_tab_size == "13":
+    tab = fonter.measure(tab13)
+elif current_tab_size == "14":
+    tab = fonter.measure(tab14)
+elif current_tab_size == "15":
+    tab = fonter.measure(tab15)
+else:
+    root.destroy()
 text.config(tabs = tab)
 text.pack(fill = BOTH, expand = True)
 

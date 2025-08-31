@@ -10,11 +10,11 @@
 - ~~Font Styles~~
 - ~~Font Sizes~~
 - ~~pyText Documentation~~
-- ~~Links to pyText Documentation inside pyText client~~    
+- ~~Links to pyText Documentation inside pyText client~~
+- ~~Tab length customization incase tabs are too small or too big~~
 
 ## Upcoming
 
 - Ability to change default window size
-- Tab length customization incase tabs are too small or too big
 - **Bold**, *Italic* and <u>Underline</u> text
 - Highlights (with custom colours)
