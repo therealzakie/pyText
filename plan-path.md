@@ -16,7 +16,8 @@
 
 ## Upcoming
 
+- New file system for text (to make <span style="background: yellow !important; color: black !important;">highlighted</span>, **bold**, *italic* and <u>underline</u> text possible)
 - Secrets 👀
-- Full support to Markdown
 - **Bold**, *Italic* and <u>Underline</u> text
-- Highlights (with custom colours)
+- <span style="background: yellow !important; color: black !important;">Highlights</span>
+- Custom highlight colours
