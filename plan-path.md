@@ -21,3 +21,4 @@
 - **Bold**, *Italic* and <u>Underline</u> text
 - <span style="background: yellow !important; color: black !important;">Highlights</span>
 - Custom highlight colours
+- Lists
