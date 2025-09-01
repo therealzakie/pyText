@@ -17,6 +17,6 @@
 ## Upcoming
 
 - Secrets 👀
-- Full switch to Markdown
+- Full support to Markdown
 - **Bold**, *Italic* and <u>Underline</u> text
 - Highlights (with custom colours)
