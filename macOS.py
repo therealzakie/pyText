@@ -127,7 +127,7 @@ def preview_window():
         preview_text = Text(preview, font = (current_font, normal_text_size))
         preview_text.pack(fill = BOTH)
 
-        # Go through all lines and figure out what text type it is.
+        # Go through all lines and figure out what text type the line is.
 
         file_list = []
 
