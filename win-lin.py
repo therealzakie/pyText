@@ -148,7 +148,7 @@ def themes_page():
     ct_option = OptionMenu(themes_frame, ct_option_current_option, theme, *ct_option_options)
     ct_option.config(bg = ct_main, fg = ct_text)
     ct_option.pack()
-    ct_confirm = Button(themes_frame, text = "Set Theme", command = comfirm_theme, borderless=1, font = (current_font, 15))
+    ct_confirm = Button(themes_frame, text = "Set Theme", command = comfirm_theme, font = (current_font, 15))
     ct_confirm.config(fg = ct_text)
     ct_confirm.config(bg = ct_alt1)
     ct_confirm.pack()
@@ -159,7 +159,7 @@ def themes_page():
     ct_option1 = OptionMenu(themes_frame, ct_option_current_option1, current_tab_size, *ct_option_options1)
     ct_option1.config(bg = ct_main, fg = ct_text)
     ct_option1.pack()
-    ct_confirm1 = Button(themes_frame, text = "Set Tab Size", command = confirm_tab_size, borderless=1, font = (current_font, 15))
+    ct_confirm1 = Button(themes_frame, text = "Set Tab Size", command = confirm_tab_size, font = (current_font, 15))
     ct_confirm1.config(fg = ct_text)
     ct_confirm1.config(bg = ct_alt1)
     ct_confirm1.pack()
@@ -170,7 +170,7 @@ def themes_page():
     ct_option1 = OptionMenu(themes_frame, ct_option_current_option2, current_tab_size, *ct_option_options2)
     ct_option1.config(bg = ct_main, fg = ct_text)
     ct_option1.pack()
-    ct_confirm1 = Button(themes_frame, text = "Set Window Size", command = confirm_window_size, borderless=1, font = (current_font, 15))
+    ct_confirm1 = Button(themes_frame, text = "Set Window Size", command = confirm_window_size, font = (current_font, 15))
     ct_confirm1.config(fg = ct_text)
     ct_confirm1.config(bg = ct_alt1)
     ct_confirm1.pack()
@@ -201,7 +201,7 @@ def fonts_page():
     ct_option = OptionMenu(fonts_frame, ct_option_current_option, current_font, *ct_list_options)
     ct_option.config(bg = ct_main, fg = ct_text)
     ct_option.pack()
-    ct_confirm = Button(fonts_frame, text = "Set Font", command = confirm_font, borderless = 1, bg = ct_alt1, font = (current_font, 15))
+    ct_confirm = Button(fonts_frame, text = "Set Font", command = confirm_font, bg = ct_alt1, font = (current_font, 15))
     ct_confirm.config(fg = ct_text)
     ct_confirm.pack()
 
@@ -211,7 +211,7 @@ def fonts_page():
     ct_entry = Entry(fonts_frame)
     ct_entry.config(bg = ct_alt1, fg = ct_text, font = (current_font, 15))
     ct_entry.pack()
-    ct_confirm1 = Button(fonts_frame, text = "Set Font Size", command = confirm_font_size, borderless = 1, bg = ct_alt1, font = (current_font, 15))
+    ct_confirm1 = Button(fonts_frame, text = "Set Font Size", command = confirm_font_size, bg = ct_alt1, font = (current_font, 15))
     ct_confirm1.config(fg = ct_text)
     ct_confirm1.pack()
     fonts_frame.pack(pady = 20)
@@ -226,7 +226,7 @@ def when_closing(event):
 
 def when_X_clicked():
     if save_delete_used == False:
-        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Command+Q'.")
+        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Control+D' and then close pyText.")
     else:
         close_pyText()
 
@@ -254,11 +254,11 @@ def open_settings():
 
     Label(master = settings_menu,text = "Settings", bg = ct_alt0, font = (current_font, 25), fg = ct_text).place(x = 3, y = 0)
 
-    themes_image_btn = Button(settings_side_nav_frame, image = window_png, bg = ct_alt0, command = lambda: hide_all_frames(themes_page), borderless=1, font = (current_font, 12))
+    themes_image_btn = Button(settings_side_nav_frame, image = window_png, bg = ct_alt0, command = lambda: hide_all_frames(themes_page), font = (current_font, 12))
     themes_image_btn.image = window_png
     themes_image_btn.place(x = 20, y = 50)
 
-    fonts_image_btn = Button(settings_side_nav_frame, image = font_png, bg = ct_alt0, command = lambda: hide_all_frames(fonts_page), borderless=1, font = (current_font, 12))
+    fonts_image_btn = Button(settings_side_nav_frame, image = font_png, bg = ct_alt0, command = lambda: hide_all_frames(fonts_page), font = (current_font, 12))
     fonts_image_btn.image = font_png
     fonts_image_btn.place(x = 20, y = 100)
 
@@ -318,7 +318,7 @@ def on_text_change(event):
 
 def close_pyText():
     if save_delete_used == False:
-        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Command+Q'.")
+        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Control+D' and then close pyText.")
     else:
         close_question = messagebox.askquestion(title = "Would you like to close pyText?", message = "Would you like to close pyText?", icon = "question")
         if close_question == "yes":
