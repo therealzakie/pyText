@@ -12,6 +12,8 @@ from tkinter.font import Font
 from PIL import Image, ImageTk
 import tkmacosx
 import webbrowser as web
+import functions
+import platform
 global save_delete_used
 save_delete_used = True
 
@@ -80,6 +82,8 @@ ct_option_current_option1 = StringVar(root)
 ct_option_current_option2 = StringVar(root)
 ct_entry_current_option = StringVar(root)
 
+operating_system = platform.system()
+
 if theme == "dark":
     ct_main = dark_main
     ct_alt0 = dark_alt0
@@ -101,6 +105,45 @@ else:
 root.config(bg = ct_main)
 
 # Functions
+
+def preview_window():
+    try:
+        # Text types
+        header_size = 30
+        sub_header_size = 25
+        double_sub_header_size = 20
+        normal_text_size = 15
+
+        preview = Toplevel(root)
+        preview.title(f"Preview of {file_path}")
+        if window_size == "Full Screen":
+            screenwidth = preview.winfo_screenwidth()
+            screenheight = preview.winfo_screenheight()
+            preview.geometry(f"{screenwidth}x{screenheight}")
+        else:
+            preview.geometry(window_size)
+        preview.minsize(height = 100, width = 100)
+
+        preview_text = Text(preview, font = (current_font, normal_text_size))
+        preview_text.pack(fill = BOTH)
+
+        # Go through all lines and figure out what text type it is.
+
+        file_list = []
+
+        with open(file_path, "r+") as file:
+            counter = 0
+            while counter < file_length:
+                file_list[counter] = file.readline().strip()
+                counter += 1
+            print(file_list)
+
+    except NameError:
+        open_file()
+
+
+def preview_key(event):
+    preview_window()
 
 def themes_page():
     def comfirm_theme():
@@ -330,12 +373,16 @@ def opening_file_key(event):
     open_file()
 
 def open_file():
+    global file_path
     file_path = filedialog.askopenfilename()
     try:
         with open(file_path, "r") as file:
             text.insert("1.0", file.read())
             global save_path
             save_path = file_path
+            global file_length
+            file_length = len(file.readlines())
+            print(file_length)
     except IsADirectoryError:
         messagebox.showerror(title = "Error", message = "You have selected a directory as your file, please try again")
         open_file()
@@ -504,6 +551,7 @@ menu_bar.add_cascade(label = "Documentation", menu = docs_menu)
 
 options_menu = Menu(menu_bar, tearoff = False)
 options_menu.add_command(label = "pyText Setttings", command = open_settings, accelerator = "Cmd+/")
+options_menu.add_command(label = "File Preview", command = preview_window, accelerator = "Cmd+P")
 options_menu.add_command(label = "Close pyText", command = close_pyText, accelerator = "Cmd+W")
 menu_bar.add_cascade(label = "Options", menu = options_menu)
 
@@ -519,6 +567,7 @@ root.bind("<Command-i>", italic_key)
 root.bind("<Command-u>", underline_key)
 root.bind("<Command-g>", open_source_key)
 root.bind("<Command-/>", settings_key)
+root.bind("<Command-p>", preview_key)
 root.bind("<Command-w>", when_closing)
 
 root.protocol("WM_DELETE_WINDOW", when_X_clicked)

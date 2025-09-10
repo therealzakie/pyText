@@ -1,0 +1,10 @@
+(h"This is a header."h)
+
+(sh"This is a sub header."sh)
+
+(dsh"This is a double sub header."dsh)
+
+This is normal text.
+This is [*bold*] text.
+This is {*italic*} text.
+This is (*underline*) text.

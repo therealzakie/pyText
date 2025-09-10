@@ -12,6 +12,7 @@ from tkinter.font import Font
 from PIL import Image, ImageTk
 from tkinter import ttk
 import webbrowser as web
+import functions
 global save_delete_used
 save_delete_used = True
 
