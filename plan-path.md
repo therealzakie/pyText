@@ -16,9 +16,6 @@
 
 ## Upcoming
 
-- New file system for text (to make <span style="background: yellow !important; color: black !important;">highlighted</span>, **bold**, *italic* and <u>underline</u> text possible)
+- Converting to the customtkinter Library
 - Secrets 👀
-- **Bold**, *Italic* and <u>Underline</u> text
-- <span style="background: yellow !important; color: black !important;">Highlights</span>
-- Custom highlight colours
 - Lists

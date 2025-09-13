@@ -12,7 +12,7 @@ from tkinter.font import Font
 from PIL import Image, ImageTk
 from tkinter import ttk
 import webbrowser as web
-import functions
+
 global save_delete_used
 save_delete_used = True
 
@@ -270,24 +270,6 @@ def open_settings():
     settings_display.pack_propagate(False)
     settings_display.configure(width = 400, height = 500)
 
-def bolden_key(event):
-    bolden_text()
-
-def bolden_text():
-    pass
-
-def italic_key(event):
-    italic_text()
-
-def italic_text():
-    pass
-
-def underline_key(event):
-    underline_text()
-
-def underline_text():
-    pass
-
 def copy_key(event):
     copy_text()
 
@@ -330,6 +312,7 @@ def opening_file_key(event):
     open_file()
 
 def open_file():
+    global file_path
     file_path = filedialog.askopenfilename()
     try:
         with open(file_path, "r") as file:
@@ -483,12 +466,6 @@ edit_menu.add_separator()
 edit_menu.add_command(label = "Select All", command = select_all_text, accelerator = "Ctrl+A")
 menu_bar.add_cascade(label = "Edit", menu = edit_menu)
 
-format_menu = Menu(menu_bar, tearoff = False)
-format_menu.add_command(label = "Bolden Text", command = bolden_text, accelerator = "Ctrl+B")
-format_menu.add_command(label = "Italic Text", command = italic_text, accelerator = "Ctrl+I")
-format_menu.add_command(label = "Underline Text", command = underline_text, accelerator = "Ctrl+U")
-menu_bar.add_cascade(label = "Format", menu = format_menu)
-
 docs_menu = Menu(menu_bar, tearoff = False)
 docs_menu.add_command(label = "Source Code", command = open_source, accelerator = "Ctrl+G")
 docs_menu.add_command(label = "READ ME", command = open_readme)
@@ -514,9 +491,6 @@ root.bind("<Control-o>", opening_file_key)
 root.bind("<Control-s>", saving_key)
 root.bind("<Alt-s>", saving_as_key)
 root.bind("<Control-d>", discard_key)
-root.bind("<Control-b>", bolden_key)
-root.bind("<Control-i>", italic_key)
-root.bind("<Control-u>", underline_key)
 root.bind("<Control-g>", open_source_key)
 root.bind("<Control-/>", settings_key)
 root.bind("<Control-w>", when_closing)

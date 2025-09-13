@@ -12,7 +12,6 @@ from tkinter.font import Font
 from PIL import Image, ImageTk
 import tkmacosx
 import webbrowser as web
-import functions
 import platform
 global save_delete_used
 save_delete_used = True
@@ -105,45 +104,6 @@ else:
 root.config(bg = ct_main)
 
 # Functions
-
-def preview_window():
-    try:
-        # Text types
-        header_size = 30
-        sub_header_size = 25
-        double_sub_header_size = 20
-        normal_text_size = 15
-
-        preview = Toplevel(root)
-        preview.title(f"Preview of {file_path}")
-        if window_size == "Full Screen":
-            screenwidth = preview.winfo_screenwidth()
-            screenheight = preview.winfo_screenheight()
-            preview.geometry(f"{screenwidth}x{screenheight}")
-        else:
-            preview.geometry(window_size)
-        preview.minsize(height = 100, width = 100)
-
-        preview_text = Text(preview, font = (current_font, normal_text_size))
-        preview_text.pack(fill = BOTH)
-
-        # Go through all lines and figure out what text type the line is.
-
-        file_list = []
-
-        with open(file_path, "r+") as file:
-            counter = 0
-            while counter < file_length:
-                file_list[counter] = file.readline().strip()
-                counter += 1
-            print(file_list)
-
-    except NameError:
-        open_file()
-
-
-def preview_key(event):
-    preview_window()
 
 def themes_page():
     def comfirm_theme():
@@ -313,23 +273,6 @@ def open_settings():
     settings_display.pack_propagate(False)
     settings_display.configure(width = 400, height = 500)
 
-def bolden_key(event):
-    bolden_text()
-
-def bolden_text():
-    pass
-
-def italic_key(event):
-    italic_text()
-
-def italic_text():
-    pass
-
-def underline_key(event):
-    underline_text()
-
-def underline_text():
-    pass
 
 def copy_key(event):
     copy_text()
@@ -380,9 +323,6 @@ def open_file():
             text.insert("1.0", file.read())
             global save_path
             save_path = file_path
-            global file_length
-            file_length = len(file.readlines())
-            print(file_length)
     except IsADirectoryError:
         messagebox.showerror(title = "Error", message = "You have selected a directory as your file, please try again")
         open_file()
@@ -530,12 +470,6 @@ edit_menu.add_separator()
 edit_menu.add_command(label = "Select All", command = select_all_text, accelerator = "Cmd+A")
 menu_bar.add_cascade(label = "Edit", menu = edit_menu)
 
-format_menu = Menu(menu_bar, tearoff = False)
-format_menu.add_command(label = "Bolden Text", command = bolden_text, accelerator = "Cmd+B")
-format_menu.add_command(label = "Italic Text", command = italic_text, accelerator = "Cmd+I")
-format_menu.add_command(label = "Underline Text", command = underline_text, accelerator = "Cmd+U")
-menu_bar.add_cascade(label = "Format", menu = format_menu)
-
 docs_menu = Menu(menu_bar, tearoff = False)
 docs_menu.add_command(label = "Source Code", command = open_source, accelerator = "Cmd+G")
 docs_menu.add_command(label = "READ ME", command = open_readme)
@@ -551,7 +485,6 @@ menu_bar.add_cascade(label = "Documentation", menu = docs_menu)
 
 options_menu = Menu(menu_bar, tearoff = False)
 options_menu.add_command(label = "pyText Setttings", command = open_settings, accelerator = "Cmd+/")
-options_menu.add_command(label = "File Preview", command = preview_window, accelerator = "Cmd+P")
 options_menu.add_command(label = "Close pyText", command = close_pyText, accelerator = "Cmd+W")
 menu_bar.add_cascade(label = "Options", menu = options_menu)
 
@@ -562,12 +495,8 @@ root.bind("<Command-o>", opening_file_key)
 root.bind("<Command-s>", saving_key)
 root.bind("<Control-s>", saving_as_key)
 root.bind("<Command-d>", discard_key)
-root.bind("<Command-b>", bolden_key)
-root.bind("<Command-i>", italic_key)
-root.bind("<Command-u>", underline_key)
 root.bind("<Command-g>", open_source_key)
 root.bind("<Command-/>", settings_key)
-root.bind("<Command-p>", preview_key)
 root.bind("<Command-w>", when_closing)
 
 root.protocol("WM_DELETE_WINDOW", when_X_clicked)
