@@ -1,6 +1,6 @@
 from tkinter import *
 
-class ScrollableFrame(Frame):
+class LegacyScrollableFrame(Frame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
         self.canvas = Canvas(self, highlightthickness = 0)

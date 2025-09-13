@@ -1,17 +1,9 @@
-"""
-TODO:
-
-    * Make MORE customizablity options.
-    * Make Bold, Italic and Underline text.
-
-"""
-
-from tkinter import *
-from tkinter import filedialog, messagebox, font
-from tkinter.font import Font
-from PIL import Image, ImageTk
-from tkinter import ttk
+from customtkinter import *
+from CTkMessagebox import *
+from tkinter import filedialog, Menu, font, TkVersion
 import webbrowser as web
+import platform
+import sys
 
 global save_delete_used
 save_delete_used = True
@@ -25,7 +17,7 @@ with open("settings/font/current_font.txt") as font_file:
     print(f"DEBUG --- Current font is {current_font}.")
 
 with open("settings/font/current_font_size.txt") as font_file:
-    current_font_size = font_file.read()
+    current_font_size = float(font_file.read())
     print(f"DEBUG --- Current font size is {current_font_size}.")
 
 with open("settings/theme/current_tab_size.txt") as tab_file:
@@ -36,7 +28,7 @@ with open("settings/window/window_size.txt") as window_file:
     window_size = window_file.read()
     print(f"DEBUG --- Current window size is {window_size}.")
 
-root = Tk()
+root = CTk()
 if window_size == "Full Screen":
     screenwidth = root.winfo_screenwidth()
     screenheight = root.winfo_screenheight()
@@ -46,17 +38,9 @@ else:
 root.minsize(height = 100, width = 100)
 root.title("pyText")
 
-light_main = "#ffffff"
-light_alt0 = "#c3c3c3"
-light_alt1 = "#1c1c1c"
-light_text = "#000000" 
 light_window = "themes/light/window.png"
 light_font = "themes/light/font.png"
 
-dark_main = "#333333"
-dark_alt0 = "#222222"
-dark_alt1 = "#8c8c8c"
-dark_text = "#ffffff"
 dark_window = "themes/dark/window.png"
 dark_font = "themes/dark/font.png"
 
@@ -76,157 +60,27 @@ tab13 = "             "
 tab14 = "              "
 tab15 = "               "
 
-ct_option_current_option = StringVar(root)
-ct_option_current_option1 = StringVar(root)
-ct_option_current_option2 = StringVar(root)
-ct_entry_current_option = StringVar(root)
+pyText_version = "1.0 customtkinter build"
 
 if theme == "dark":
-    ct_main = dark_main
-    ct_alt0 = dark_alt0
-    ct_alt1 = dark_alt1
-    ct_text = dark_text
+    root._set_appearance_mode("dark")
     ct_window = dark_window
     ct_font = dark_font
 elif theme == "light":
-    ct_main = light_main
-    ct_alt0 = light_alt0
-    ct_alt1 = light_alt1
-    ct_text = light_text
+    root._set_appearance_mode("light")
     ct_window = light_window
     ct_font = light_font
 else:
-    messagebox.showerror(title = "Error", message = "Please change the contents of 'current_theme.txt' in the directory 'settings/theme' to 'dark' or 'light'.")
-    root.destroy()
-
-root.config(bg = ct_main)
+    root._set_appearance_mode("System")
 
 # Functions
-
-def themes_page():
-    def comfirm_theme():
-        with open("settings/theme/current_theme.txt", "w") as theme_file:
-            new_theme = f"{ct_option_current_option.get()}"
-            theme_file.write(new_theme)
-            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the theme.")
-
-    def confirm_tab_size():
-        with open("settings/theme/current_tab_size.txt", "w") as tab_file:
-            new_tab_size = f"{ct_option_current_option1.get()}"
-            tab_file.write(new_tab_size)
-            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the tab size.")
-
-    def confirm_window_size():
-        with open("settings/window/window_size.txt", "w") as win_file:
-            new_window_size = f"{ct_option_current_option2.get()}"
-            win_file.write(new_window_size)
-            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the window size.")
-
-    ct_option_options = ["light", "dark"]
-    ct_option_options1 = []
-    ct_option_options2 = ["100x100", "200x200", "300x300", "400x400", "500x500", "600x600", "700x700", "800x800", "900x900", "1000x1000", "Full Screen"]
-
-    index = 1
-
-    while index <= 15:
-        ct_option_options1.append(index)
-        index += 1
-
-    print(ct_option_options1)
-
-    if theme in ct_option_options:
-        ct_option_options.remove(theme)
-    else:
-        root.destroy()
-
-    themes_frame = Frame(settings_display, bg = ct_main)
-    Label(themes_frame, text = "Themes Settings", font = (current_font, 20), bg = ct_main, fg = ct_text).pack(side = TOP)
-
-    # Theme
-
-    Label(themes_frame, text = "Current Theme", font = (current_font, 15), bg = ct_main, fg = ct_text).pack(side = TOP)
-    ct_option = OptionMenu(themes_frame, ct_option_current_option, theme, *ct_option_options)
-    ct_option.config(bg = ct_main, fg = ct_text)
-    ct_option.pack()
-    ct_confirm = Button(themes_frame, text = "Set Theme", command = comfirm_theme, font = (current_font, 15))
-    ct_confirm.config(fg = ct_text)
-    ct_confirm.config(bg = ct_alt1)
-    ct_confirm.pack()
-
-    # Tab Size
-
-    Label(themes_frame, text = "Current Tab Size", font = (current_font, 15), bg = ct_main, fg = ct_text).pack(side = TOP)
-    ct_option1 = OptionMenu(themes_frame, ct_option_current_option1, current_tab_size, *ct_option_options1)
-    ct_option1.config(bg = ct_main, fg = ct_text)
-    ct_option1.pack()
-    ct_confirm1 = Button(themes_frame, text = "Set Tab Size", command = confirm_tab_size, font = (current_font, 15))
-    ct_confirm1.config(fg = ct_text)
-    ct_confirm1.config(bg = ct_alt1)
-    ct_confirm1.pack()
-
-    # Window Size
-
-    Label(themes_frame, text = "Current Window Size", font = (current_font, 15), bg = ct_main, fg = ct_text).pack(side = TOP)
-    ct_option1 = OptionMenu(themes_frame, ct_option_current_option2, current_tab_size, *ct_option_options2)
-    ct_option1.config(bg = ct_main, fg = ct_text)
-    ct_option1.pack()
-    ct_confirm1 = Button(themes_frame, text = "Set Window Size", command = confirm_window_size, font = (current_font, 15))
-    ct_confirm1.config(fg = ct_text)
-    ct_confirm1.config(bg = ct_alt1)
-    ct_confirm1.pack()
-
-    themes_frame.pack(pady = 20)
-
-def fonts_page():
-    def confirm_font():
-        with open("settings/font/current_font.txt", "w") as font_file:
-            new_font = f"{ct_option_current_option.get()}"
-            font_file.write(new_font)
-            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the font.")
-    def confirm_font_size():
-        with open("settings/font/current_font_size.txt", "w") as font_file:
-            new_font_size = f"{ct_entry.get()}"
-            font_file.write(new_font_size)
-            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the font size.")
-    ct_option_options = font.families()
-    ct_list_options = []
-    for fonterson in ct_option_options:
-        ct_list_options.append(fonterson)
-    ct_list_options.append("TkDefaultFont")
-    fonts_frame = Frame(settings_display, bg = ct_main)
-    Label(fonts_frame, text = "Fonts Settings", font = (current_font, 20), bg = ct_main, fg = ct_text).pack(side = TOP)
-    
-    # Font Selection
-    Label(fonts_frame, text = "Font", font = (current_font, 15), bg = ct_main, fg = ct_text).pack()
-    ct_option = OptionMenu(fonts_frame, ct_option_current_option, current_font, *ct_list_options)
-    ct_option.config(bg = ct_main, fg = ct_text)
-    ct_option.pack()
-    ct_confirm = Button(fonts_frame, text = "Set Font", command = confirm_font, bg = ct_alt1, font = (current_font, 15))
-    ct_confirm.config(fg = ct_text)
-    ct_confirm.pack()
-
-    # Font Size
-    Label(fonts_frame, text = "Font Size", font = (current_font, 15), bg = ct_main, fg = ct_text).pack()
-    Label(fonts_frame, text = "(Only changes font-size in the editor)", font = (current_font, 10), bg = ct_main, fg = ct_text).pack()
-    ct_entry = Entry(fonts_frame)
-    ct_entry.config(bg = ct_alt1, fg = ct_text, font = (current_font, 15))
-    ct_entry.pack()
-    ct_confirm1 = Button(fonts_frame, text = "Set Font Size", command = confirm_font_size, bg = ct_alt1, font = (current_font, 15))
-    ct_confirm1.config(fg = ct_text)
-    ct_confirm1.pack()
-    fonts_frame.pack(pady = 20)
-
-def hide_all_frames(page):
-    for frame in settings_display.winfo_children():
-        frame.destroy()
-    page()
 
 def when_closing(event):
     when_X_clicked()
 
 def when_X_clicked():
     if save_delete_used == False:
-        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Control+D' and then close pyText.")
+        CTkMessagebox(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Control+D' and then close pyText.")
     else:
         close_pyText()
 
@@ -234,41 +88,143 @@ def settings_key(event):
     open_settings()
 
 def open_settings():
-    settings_menu = Toplevel(root)
-    settings_menu.title("pyText Settings")
-    settings_menu.geometry("500x300")
-    settings_menu.resizable(False, False)
+    def confirm_theme():
+        with open("settings/theme/current_theme.txt", "w") as theme_file:
+            new_theme = f"{theme_option.get()}"
+            theme_file.write(new_theme)
+            CTkMessagebox(title = "Completed", message = "Make sure to change your system's theme in it's settings!")
+            CTkMessagebox(title = "Completed", message = "Restart pyText to change the theme.")
 
-    # Images
-    window_picture = Image.open(ct_window)
-    window_png = ImageTk.PhotoImage(window_picture)
-    font_picture = Image.open(ct_font)
-    font_png = ImageTk.PhotoImage(font_picture)
+    def confirm_tab_size():
+        with open("settings/theme/current_tab_size.txt", "w") as tab_file:
+            new_tab_size = f"{tab_size_option.get()}"
+            tab_file.write(new_tab_size)
+            CTkMessagebox(title = "Completed", message = "Restart pyText to change the tab size.")
 
-    # Side Nav
+    def confirm_window_size():
+        with open("settings/window/window_size.txt", "w") as win_file:
+            new_window_size = f"{window_size_option.get()}"
+            win_file.write(new_window_size)
+            CTkMessagebox(title = "Completed", message = "Restart pyText to change the window size.")
+    
+    def confirm_font():
+            with open("settings/font/current_font.txt", "w") as font_file:
+                new_font = f"{font_option.get()}"
+                font_file.write(new_font)
+                CTkMessagebox(title = "Completed", message = "Restart pyText to change the font.")
+    def confirm_font_size():
+        with open("settings/font/current_font_size.txt", "w") as font_file:
+            new_font_size = f"{font_size_entry.get()}"
+            font_file.write(new_font_size)
+            CTkMessagebox(title = "Completed", message = "Restart pyText to change the font size.")
 
-    settings_side_nav_frame = Frame(settings_menu, bg = ct_alt0)
-    settings_side_nav_frame.pack(side = LEFT)
-    settings_side_nav_frame.pack_propagate(False)
-    settings_side_nav_frame.configure(width = 130, height = 300)
+    theme_option = StringVar(root)
+    tab_size_option = StringVar(root)
+    window_size_option = StringVar(root)
+    font_option = StringVar(root)
 
-    Label(master = settings_menu,text = "Settings", bg = ct_alt0, font = (current_font, 25), fg = ct_text).place(x = 3, y = 0)
+    settings = CTkToplevel(root)
+    settings.geometry("500x500")
+    settings.title("pyText Settings")
+    settings.resizable(False, False)
 
-    themes_image_btn = Button(settings_side_nav_frame, image = window_png, bg = ct_alt0, command = lambda: hide_all_frames(themes_page), font = (current_font, 12))
-    themes_image_btn.image = window_png
-    themes_image_btn.place(x = 20, y = 50)
+    tabview = CTkTabview(settings, width = 460, height = 460)
+    tabview.pack()
+    tabview.add("Window")
+    tabview.add("Font")
+    tabview.add("Debug")
 
-    fonts_image_btn = Button(settings_side_nav_frame, image = font_png, bg = ct_alt0, command = lambda: hide_all_frames(fonts_page), font = (current_font, 12))
-    fonts_image_btn.image = font_png
-    fonts_image_btn.place(x = 20, y = 100)
+    # Options
 
-    # Main Screen
+    theme_options = ["light", "dark"]
+    ctk_default_font = tuple(["CTkFont"])
+    font_options = font.families() + ctk_default_font
+    print(font_options)
+    window_size_options = ["100x100", "200x200", "300x300", "400x400", "500x500", "600x600", "700x700", "800x800", "900x900", "1000x1000", "Full Screen"]
+    tab_size_options = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]
 
-    global settings_display
-    settings_display = Frame(settings_menu, bg = ct_main)
-    settings_display.pack(side = LEFT)
-    settings_display.pack_propagate(False)
-    settings_display.configure(width = 400, height = 500)
+    # Window
+
+    CTkLabel(tabview.tab("Window"), text = "Window Settings", font = (current_font, 20)).pack(side = TOP)
+    
+    window_frame = CTkScrollableFrame(tabview.tab("Window"), width = 400, height = 350)
+    if theme == "dark":
+        window_frame.configure(fg_color = "#252525")
+    elif theme == "light":
+        window_frame.configure(fg_color = "#FFFFFF")
+    else:
+        window_frame.configure(fg_color = "#6B6B6B")
+    window_frame.pack()
+
+    CTkLabel(window_frame, text = "Theme", font = (current_font, 15)).pack()
+    theme_optionmenu = CTkOptionMenu(master = window_frame, values = theme_options, variable = theme_option)
+    theme_optionmenu.set(theme)
+    theme_optionmenu.pack()
+    CTkLabel(window_frame, text = " ", font = (current_font, 3)).pack()
+    CTkButton(window_frame, text = "Confirm", command = confirm_theme).pack()
+
+    CTkLabel(window_frame, text = "Tab Size", font = (current_font, 15)).pack()
+    tab_size_optionmenu = CTkOptionMenu(master = window_frame, values = tab_size_options, variable = tab_size_option)
+    tab_size_optionmenu.set(current_tab_size)
+    tab_size_optionmenu.pack()
+    CTkLabel(window_frame, text = " ", font = (current_font, 3)).pack()
+    CTkButton(window_frame, text = "Confirm", command = confirm_tab_size).pack()
+
+    CTkLabel(window_frame, text = "Default Window Size", font = (current_font, 15)).pack()
+    window_size_optionmenu = CTkOptionMenu(master = window_frame, values = window_size_options, variable = window_size_option)
+    window_size_optionmenu.set(window_size)
+    window_size_optionmenu.pack()
+    CTkLabel(window_frame, text = " ", font = (current_font, 3)).pack()
+    CTkButton(window_frame, text = "Confirm", command = confirm_window_size).pack()
+
+    # Font
+
+    CTkLabel(tabview.tab("Font"), text = "Font Settings", font = (current_font, 20)).pack(side = TOP)
+    
+    font_frame = CTkScrollableFrame(tabview.tab("Font"), width = 400, height = 350)
+    if theme == "dark":
+        font_frame.configure(fg_color = "#252525")
+    elif theme == "light":
+        font_frame.configure(fg_color = "#FFFFFF")
+    else:
+        font_frame.configure(fg_color = "#6B6B6B")
+    font_frame.pack()
+
+    CTkLabel(font_frame, text = "Font", font = (current_font, 15)).pack()
+
+    font_optionmenu = CTkOptionMenu(master = font_frame, values = font_options, variable = font_option)
+    font_optionmenu.set(current_font)
+    font_optionmenu.pack()
+    CTkLabel(font_frame, text = " ", font = (current_font, 3)).pack()
+    CTkButton(font_frame, text = "Confirm", command = confirm_font).pack()
+
+    CTkLabel(font_frame, text = "Font Size", font = (current_font, 15)).pack()
+
+    font_size_entry = CTkEntry(master = font_frame, placeholder_text = "Font Size (Integer)")
+    font_size_entry.pack()
+    CTkLabel(font_frame, text = " ", font = (current_font, 3)).pack()
+    CTkButton(font_frame, text = "Confirm", command = confirm_font_size).pack()
+
+    # Debug Info
+
+    CTkLabel(tabview.tab("Debug"), text = "Debug Information", font = (current_font, 20)).pack()
+    
+    debug_frame = CTkScrollableFrame(tabview.tab("Debug"), width = 400, height = 350)
+    if theme == "dark":
+        debug_frame.configure(fg_color = "#252525")
+    elif theme == "light":
+        debug_frame.configure(fg_color = "#A0A0A0")
+    else:
+        debug_frame.configure(fg_color = "#6B6B6B")
+    debug_frame.pack()
+
+    CTkLabel(debug_frame, text = f"Operating System: {platform.system()}").pack()
+    CTkLabel(debug_frame, text = f"{platform.system()} Version: {platform.version()}").pack()
+    CTkLabel(debug_frame, text = f"Python Version: {platform.python_version()}").pack()
+    CTkLabel(debug_frame, text = f"pyText Version: {pyText_version}").pack()
+    CTkLabel(debug_frame, text = f"customtkinter Module Version: {sys.modules['customtkinter'].__version__}").pack()
+    CTkLabel(debug_frame, text = f"CTkMessagebox Module Version: {sys.modules['CTkMessagebox'].__version__}").pack()
+    CTkLabel(debug_frame, text = f"tkinter Module Version: {TkVersion}").pack()
 
 def copy_key(event):
     copy_text()
@@ -300,10 +256,10 @@ def on_text_change(event):
 
 def close_pyText():
     if save_delete_used == False:
-        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Control+D' and then close pyText.")
+        CTkMessagebox(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Control+D' and then close pyText.")
     else:
-        close_question = messagebox.askquestion(title = "Would you like to close pyText?", message = "Would you like to close pyText?", icon = "question")
-        if close_question == "yes":
+        close_question = CTkMessagebox(title = "Would you like to close pyText?", message = "Would you like to close pyText?", icon="question", option_1="Cancel", option_2="No", option_3="Yes")
+        if close_question.get() == "Yes":
             root.quit()
         else:
             return
@@ -320,10 +276,10 @@ def open_file():
             global save_path
             save_path = file_path
     except IsADirectoryError:
-        messagebox.showerror(title = "Error", message = "You have selected a directory as your file, please try again")
+        CTkMessagebox(title = "Error", message = "You have selected a directory as your file, please try again")
         open_file()
     except:
-        messagebox.showerror(title = "Error", message = "An unknown error occurred, please try again.")
+        CTkMessagebox(title = "Error", message = "An unknown error occurred, please try again.")
         return
 
 def saving_key(event):
@@ -350,15 +306,15 @@ def save_as_file():
             global save_delete_used
             save_delete_used = True
     except:
-        messagebox.showerror(title = "Error", message = "An unknown error occurred, please try again.")
+        CTkMessagebox(title = "Error", message = "An unknown error occurred, please try again.")
         return
     
 def discard_key(event):
     discard_file()
 
 def discard_file():
-    discard_question = messagebox.askquestion(title = "Discard file?", message = "Are you sure that you want to discard this file? It will undo all changes create a new file.")
-    if discard_question == "yes":
+    discard_question = CTkMessagebox(title = "Discard file?", message = "Are you sure that you want to discard this file? It will undo all changes create a new file.", icon="question", option_1="Cancel", option_2="No", option_3="Yes")
+    if discard_question.get() == "Yes":
         global save_delete_used
         save_delete_used = True
         new_file()
@@ -368,9 +324,9 @@ def new_file_key(event):
 
 def new_file():
     if save_delete_used == False:
-        messagebox.showwarning(title = "Save first!", message = "Save your document before creating a new file!")
-        new_file_question = messagebox.askquestion(title = "New file?", message = "Would you like to create a new file, discarding the one you're currently editing?", icon = "question")
-        if new_file_question == "yes":
+        CTkMessagebox(title = "Save first!", message = "Save your document before creating a new file!")
+        new_file_question = CTkMessagebox(title = "New file?", message = "Would you like to create a new file, discarding the one you're currently editing?", icon="question", option_1="Cancel", option_2="No", option_3="Yes")
+        if new_file_question.get() == "Yes":
             text.delete("1.0", END)
         else:
             return
@@ -400,12 +356,12 @@ def open_keybinds():
 
 # Basic text editor and scroll-bar
 
-scroll_bar = Scrollbar(root)
+scroll_bar = CTkScrollbar(root)
 scroll_bar.pack(side = RIGHT, fill = Y)
 
-text = Text(root, yscrollcommand = scroll_bar.set, undo = True, bg = ct_main, fg = ct_text, font = (current_font, current_font_size))
+text = CTkTextbox(root, yscrollcommand = scroll_bar.set, undo = True, font = (current_font, current_font_size))
 text.bind("<<Modified>>", on_text_change)
-fonter = Font(font=text['font'])
+fonter = CTkFont()
 if current_tab_size == "1":
     tab = fonter.measure(tab1)
 elif current_tab_size == "2":
@@ -438,10 +394,10 @@ elif current_tab_size == "15":
     tab = fonter.measure(tab15)
 else:
     root.destroy()
-text.config(tabs = tab)
+text.configure(tabs = tab)
 text.pack(fill = BOTH, expand = True)
 
-scroll_bar.config(command = text.yview)
+scroll_bar.configure(command = text.yview)
 
 # Menu Bar
 
@@ -475,12 +431,11 @@ docs_features_menu.add_command(label = "Closing Safety", command = open_df_closi
 docs_features_menu.add_command(label = "Themes", command = open_df_themes)
 docs_features_menu.add_command(label = "Fonts", command = open_df_fonts)
 docs_menu.add_cascade(label = "Features", menu = docs_features_menu)
-
 docs_menu.add_command(label = "Keybinds", command = open_keybinds)
 menu_bar.add_cascade(label = "Documentation", menu = docs_menu)
 
 options_menu = Menu(menu_bar, tearoff = False)
-options_menu.add_command(label = "pyText Setttings", command = open_settings, accelerator = "Ctrl+/")
+options_menu.add_command(label = "pyText Settings", command = open_settings, accelerator = "Ctrl+/")
 options_menu.add_command(label = "Close pyText", command = close_pyText, accelerator = "Ctrl+W")
 menu_bar.add_cascade(label = "Options", menu = options_menu)
 
