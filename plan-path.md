@@ -18,6 +18,5 @@
 
 ## Upcoming
 
-- Multiple Windows
 - Multiple Tabs in a single window
 - Secrets 👀
