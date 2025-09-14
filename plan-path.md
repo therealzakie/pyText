@@ -18,6 +18,9 @@
 
 ## Upcoming
 
+<<<<<<< HEAD
 - Multiple Windows
+=======
+>>>>>>> master
 - Multiple Tabs in a single window
 - Secrets 👀
