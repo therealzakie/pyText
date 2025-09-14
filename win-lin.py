@@ -4,6 +4,7 @@ from tkinter import filedialog, Menu, font, TkVersion
 import webbrowser as web
 import platform
 import sys
+from CTkMenuBar import *
 
 global save_delete_used
 save_delete_used = True
@@ -354,6 +355,82 @@ def open_df_fonts():
 def open_keybinds():
     web.open("https://github.com/therealzakie/pyText/blob/master/documentation/keybinds/keybinds_windows_linux.md", new = 2)
 
+# MenuBar
+
+if platform.system() == "Windows":
+    menu = CTkTitleMenu(master = root)
+
+    file_btn = menu.add_cascade("File")
+    file_dropdown = CustomDropdownMenu(widget = file_btn)
+    file_dropdown.add_option(option = "New (Ctrl+N)", command = new_file)
+    file_dropdown.add_separator()
+    file_dropdown.add_option(option = "Open (Ctrl+O)", command = open_file)
+    file_dropdown.add_separator()
+    file_dropdown.add_option(option = "Save (Ctrl+S)", command = save_file)
+    file_dropdown.add_option(option = "Save as (Alt+S)", command = save_as_file)
+    file_dropdown.add_option(option = "Discard File (Ctrl+D)", command = discard_file)
+
+    edit_btn = menu.add_cascade("Edit")
+    edit_dropdown = CustomDropdownMenu(widget = edit_btn)
+    edit_dropdown.add_option(option = "Copy (Ctrl+C)", command = copy_text)
+    edit_dropdown.add_option(option = "Cut (Ctrl+X)", command = cut_text)
+    edit_dropdown.add_option(option = "Paste (Ctrl+V)", command = paste_text)
+    edit_dropdown.add_separator()
+    edit_dropdown.add_option(option = "Select All (Ctrl+A)", command = select_all_text)
+
+    docs_btn = menu.add_cascade("Documentation")
+    docs_dropdown = CustomDropdownMenu(widget = docs_btn)
+    docs_dropdown.add_option(option = "Source Code (Ctrl+G)", command = open_source)
+    docs_dropdown.add_option(option = "README", command = open_readme)
+    docs_dropdown.add_separator()
+    features_submenu = docs_dropdown.add_submenu("Features")
+    features_submenu.add_option(option = "Closing Safety", command = open_df_closing_safety)
+    features_submenu.add_option(option = "Editable Theme", command = open_df_themes)
+    features_submenu.add_option(option = "Editable Font", command = open_df_fonts)
+    docs_dropdown.add_option(option = "Keybinds", command = open_keybinds)
+
+    options_btn = menu.add_cascade("Options")
+    options_dropdown = CustomDropdownMenu(widget = options_btn)
+    options_dropdown.add_option(option = "Settings (Ctrl+/)", command = open_settings)
+    options_dropdown.add_option(option = "Close pyText (Ctrl+W)", command = close_pyText)
+
+else:
+    menu = CTkTitleMenu(master = root)
+
+    file_btn = menu.add_cascade("File")
+    file_dropdown = CustomDropdownMenu(widget = file_btn)
+    file_dropdown.add_option(option = "New (Ctrl+N)", command = new_file)
+    file_dropdown.add_separator()
+    file_dropdown.add_option(option = "Open (Ctrl+O)", command = open_file)
+    file_dropdown.add_separator()
+    file_dropdown.add_option(option = "Save (Ctrl+S)", command = save_file)
+    file_dropdown.add_option(option = "Save as (Alt+S)", command = save_as_file)
+    file_dropdown.add_option(option = "Discard File (Ctrl+D)", command = discard_file)
+
+    edit_btn = menu.add_cascade("Edit")
+    edit_dropdown = CustomDropdownMenu(widget = edit_btn)
+    edit_dropdown.add_option(option = "Copy (Ctrl+C)", command = copy_text)
+    edit_dropdown.add_option(option = "Cut (Ctrl+X)", command = cut_text)
+    edit_dropdown.add_option(option = "Paste (Ctrl+V)", command = paste_text)
+    edit_dropdown.add_separator()
+    edit_dropdown.add_option(option = "Select All (Ctrl+A)", command = select_all_text)
+
+    docs_btn = menu.add_cascade("Documentation")
+    docs_dropdown = CustomDropdownMenu(widget = docs_btn)
+    docs_dropdown.add_option(option = "Source Code (Ctrl+G)", command = open_source)
+    docs_dropdown.add_option(option = "README", command = open_readme)
+    docs_dropdown.add_separator()
+    features_submenu = docs_dropdown.add_submenu("Features")
+    features_submenu.add_option(option = "Closing Safety", command = open_df_closing_safety)
+    features_submenu.add_option(option = "Editable Theme", command = open_df_themes)
+    features_submenu.add_option(option = "Editable Font", command = open_df_fonts)
+    docs_dropdown.add_option(option = "Keybinds", command = open_keybinds)
+
+    options_btn = menu.add_cascade("Options")
+    options_dropdown = CustomDropdownMenu(widget = options_btn)
+    options_dropdown.add_option(option = "Settings (Ctrl+/)", command = open_settings)
+    options_dropdown.add_option(option = "Close pyText (Ctrl+W)", command = close_pyText)
+
 # Basic text editor and scroll-bar
 
 scroll_bar = CTkScrollbar(root)
@@ -398,46 +475,6 @@ text.configure(tabs = tab)
 text.pack(fill = BOTH, expand = True)
 
 scroll_bar.configure(command = text.yview)
-
-# Menu Bar
-
-menu_bar = Menu(root)
-
-file_menu = Menu(menu_bar, tearoff = False)
-file_menu.add_command(label = "New", command = new_file, accelerator = "Ctrl+N")
-file_menu.add_separator()
-file_menu.add_command(label = "Open", command = open_file, accelerator = "Ctrl+O")
-file_menu.add_separator()
-file_menu.add_command(label = "Save", command = save_file, accelerator = "Ctrl+S")
-file_menu.add_command(label = "Save As", command = save_as_file, accelerator = "Alt+S")
-file_menu.add_separator()
-file_menu.add_command(label = "Discard File", command = discard_file, accelerator = "Ctrl+D")
-menu_bar.add_cascade(label = "File", menu = file_menu)
-
-edit_menu = Menu(menu_bar, tearoff = False)
-edit_menu.add_command(label = "Copy", command = copy_text, accelerator = "Ctrl+C")
-edit_menu.add_command(label = "Cut", command = cut_text, accelerator = "Ctrl+X")
-edit_menu.add_command(label = "Paste", command = paste_text, accelerator = "Ctrl+V")
-edit_menu.add_separator()
-edit_menu.add_command(label = "Select All", command = select_all_text, accelerator = "Ctrl+A")
-menu_bar.add_cascade(label = "Edit", menu = edit_menu)
-
-docs_menu = Menu(menu_bar, tearoff = False)
-docs_menu.add_command(label = "Source Code", command = open_source, accelerator = "Ctrl+G")
-docs_menu.add_command(label = "READ ME", command = open_readme)
-
-docs_features_menu = Menu(docs_menu, tearoff = False)
-docs_features_menu.add_command(label = "Closing Safety", command = open_df_closing_safety)
-docs_features_menu.add_command(label = "Themes", command = open_df_themes)
-docs_features_menu.add_command(label = "Fonts", command = open_df_fonts)
-docs_menu.add_cascade(label = "Features", menu = docs_features_menu)
-docs_menu.add_command(label = "Keybinds", command = open_keybinds)
-menu_bar.add_cascade(label = "Documentation", menu = docs_menu)
-
-options_menu = Menu(menu_bar, tearoff = False)
-options_menu.add_command(label = "pyText Settings", command = open_settings, accelerator = "Ctrl+/")
-options_menu.add_command(label = "Close pyText", command = close_pyText, accelerator = "Ctrl+W")
-menu_bar.add_cascade(label = "Options", menu = options_menu)
 
 # Keyboard Shortcuts
 

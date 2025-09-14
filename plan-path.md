@@ -14,8 +14,9 @@
 - ~~Tab length customization incase tabs are too small or too big~~
 - ~~Ability to change default window size~~
 - ~~Converting to the customtkinter Library~~
+- ~~Fancy new MenuBar!~~
 
 ## Upcoming
 
-- Fancy new MenuBar!
+- Multiple Windows
 - Secrets 👀
