@@ -15,6 +15,7 @@
 - ~~Ability to change default window size~~
 - ~~Converting to the customtkinter Library~~
 - ~~Fancy new MenuBar!~~
+- ~~Colour Themes~~
 
 ## Upcoming
 

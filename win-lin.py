@@ -9,9 +9,17 @@ from CTkMenuBar import *
 global save_delete_used
 save_delete_used = True
 
+root = CTk()
+
 with open("settings/theme/current_theme.txt") as theme_file:
     theme = theme_file.read()
     print(f"DEBUG --- Current theme is {theme}.")
+
+with open("settings/theme/current_colour_scheme.txt") as colour_file:
+    colour_scheme = colour_file.read()
+    set_default_color_theme(colour_scheme)
+    
+    print(f"DEBUG --- Current Colour Scheme is {colour_scheme}.")
 
 with open("settings/font/current_font.txt") as font_file:
     current_font = font_file.read()
@@ -29,7 +37,6 @@ with open("settings/window/window_size.txt") as window_file:
     window_size = window_file.read()
     print(f"DEBUG --- Current window size is {window_size}.")
 
-root = CTk()
 if window_size == "Full Screen":
     screenwidth = root.winfo_screenwidth()
     screenheight = root.winfo_screenheight()
@@ -96,6 +103,12 @@ def open_settings():
             CTkMessagebox(title = "Completed", message = "Make sure to change your system's theme in it's settings!")
             CTkMessagebox(title = "Completed", message = "Restart pyText to change the theme.")
 
+    def confirm_colour_scheme():
+        with open("settings/theme/current_colour_scheme.txt", "w") as colour_file:
+            new_colour_scheme = f"{colour_option.get()}"
+            colour_file.write(new_colour_scheme)
+            CTkMessagebox(title = "Completed", message = "Restart pyText to change the colour scheme.")
+
     def confirm_tab_size():
         with open("settings/theme/current_tab_size.txt", "w") as tab_file:
             new_tab_size = f"{tab_size_option.get()}"
@@ -120,6 +133,7 @@ def open_settings():
             CTkMessagebox(title = "Completed", message = "Restart pyText to change the font size.")
 
     theme_option = StringVar(root)
+    colour_option = StringVar(root)
     tab_size_option = StringVar(root)
     window_size_option = StringVar(root)
     font_option = StringVar(root)
@@ -138,9 +152,9 @@ def open_settings():
     # Options
 
     theme_options = ["light", "dark"]
+    colour_options = ["blue", "dark_blue", "green"]
     ctk_default_font = tuple(["CTkFont"])
     font_options = font.families() + ctk_default_font
-    print(font_options)
     window_size_options = ["100x100", "200x200", "300x300", "400x400", "500x500", "600x600", "700x700", "800x800", "900x900", "1000x1000", "Full Screen"]
     tab_size_options = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]
 
@@ -163,6 +177,13 @@ def open_settings():
     theme_optionmenu.pack()
     CTkLabel(window_frame, text = " ", font = (current_font, 3)).pack()
     CTkButton(window_frame, text = "Confirm", command = confirm_theme).pack()
+
+    CTkLabel(window_frame, text = "Colour Scheme", font = (current_font, 15)).pack()
+    colour_optionmenu = CTkOptionMenu(master = window_frame, values = colour_options, variable = colour_option)
+    colour_optionmenu.set(colour_scheme)
+    colour_optionmenu.pack()
+    CTkLabel(window_frame, text = " ", font = (current_font, 3)).pack()
+    CTkButton(window_frame, text = "Confirm", command = confirm_colour_scheme).pack()
 
     CTkLabel(window_frame, text = "Tab Size", font = (current_font, 15)).pack()
     tab_size_optionmenu = CTkOptionMenu(master = window_frame, values = tab_size_options, variable = tab_size_option)
