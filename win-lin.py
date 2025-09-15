@@ -68,7 +68,11 @@ tab13 = "             "
 tab14 = "              "
 tab15 = "               "
 
+<<<<<<< HEAD
 pyText_version = "1.0.0 customtkinter build (develop branch)"
+=======
+pyText_version = "1.0.0 customtkinter build (master branch)"
+>>>>>>> master
 
 if theme == "dark":
     root._set_appearance_mode("dark")
