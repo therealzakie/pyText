@@ -416,7 +416,7 @@ if platform.system() == "Windows":
     options_dropdown.add_option(option = "Close pyText (Ctrl+W)", command = close_pyText)
 
 else:
-    menu = CTkTitleMenu(master = root)
+    menu = CTkMenuBar(master = root)
 
     file_btn = menu.add_cascade("File")
     file_dropdown = CustomDropdownMenu(widget = file_btn)
