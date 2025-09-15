@@ -247,6 +247,7 @@ def open_settings():
     CTkLabel(debug_frame, text = f"customtkinter Module Version: {sys.modules['customtkinter'].__version__}").pack()
     CTkLabel(debug_frame, text = f"CTkMessagebox Module Version: {sys.modules['CTkMessagebox'].__version__}").pack()
     CTkLabel(debug_frame, text = f"tkinter Module Version: {TkVersion}").pack()
+    CTkLabel(debug_frame, text = f"CTkMenuBar Module Version: {sys.modules['CTkMenuBar'].__version__}").pack()
 
 def copy_key(event):
     copy_text()
@@ -412,7 +413,7 @@ if platform.system() == "Windows":
 
     options_btn = menu.add_cascade("Options")
     options_dropdown = CustomDropdownMenu(widget = options_btn)
-    options_dropdown.add_option(option = "Settings (Ctrl+/)", command = open_settings)
+    options_dropdown.add_option(option = "Settings (Ctrl+,)", command = open_settings)
     options_dropdown.add_option(option = "Close pyText (Ctrl+W)", command = close_pyText)
 
 else:
@@ -449,7 +450,7 @@ else:
 
     options_btn = menu.add_cascade("Options")
     options_dropdown = CustomDropdownMenu(widget = options_btn)
-    options_dropdown.add_option(option = "Settings (Ctrl+/)", command = open_settings)
+    options_dropdown.add_option(option = "Settings (Ctrl+,)", command = open_settings)
     options_dropdown.add_option(option = "Close pyText (Ctrl+W)", command = close_pyText)
 
 # Basic text editor and scroll-bar
@@ -505,7 +506,7 @@ root.bind("<Control-s>", saving_key)
 root.bind("<Alt-s>", saving_as_key)
 root.bind("<Control-d>", discard_key)
 root.bind("<Control-g>", open_source_key)
-root.bind("<Control-/>", settings_key)
+root.bind("<Control-,>", settings_key)
 root.bind("<Control-w>", when_closing)
 
 root.protocol("WM_DELETE_WINDOW", when_X_clicked)
