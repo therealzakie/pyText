@@ -122,10 +122,10 @@ def open_settings():
             CTkMessagebox(title = "Completed", message = "Restart pyText to change the window size.")
     
     def confirm_font():
-            with open("settings/font/current_font.txt", "w") as font_file:
-                new_font = f"{font_option.get()}"
-                font_file.write(new_font)
-                CTkMessagebox(title = "Completed", message = "Restart pyText to change the font.")
+        with open("settings/font/current_font.txt", "w") as font_file:
+            new_font = f"{font_option.get()}"
+            font_file.write(new_font)
+            CTkMessagebox(title = "Completed", message = "Restart pyText to change the font.")
     def confirm_font_size():
         with open("settings/font/current_font_size.txt", "w") as font_file:
             new_font_size = f"{font_size_entry.get()}"
