@@ -19,6 +19,8 @@
 
 ## Upcoming
 
+- Finding text function
+- Replacing text function
 - Secrets 👀
 
 ## Ideas that are not possible with my time

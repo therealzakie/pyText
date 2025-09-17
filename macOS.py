@@ -1,5 +1,18 @@
-from customtkinter import *
-from CTkMessagebox import *
+import os
+try:
+	from customtkinter import *
+except:
+	print("Installing customtkinter...")
+	os.system("pip install customtkinter")
+	from customtkinter import *
+
+try:
+	from CTkMessagebox import *
+except:
+	print("Installing CTkMessagebox...")
+	os.system("pip install CTkMessagebox")
+	from CTkMessagebox import *
+
 from tkinter import filedialog, Menu, font, TkVersion
 import webbrowser as web
 import platform
@@ -336,7 +349,16 @@ def discard_file():
     if discard_question.get() == "Yes":
         global save_delete_used
         save_delete_used = True
-        new_file()
+        try:
+            root.destroy()
+            os.system("python win-lin.py")
+        except:
+            try:
+                root.destroy()
+                os.system("py win-lin.py")
+            except:
+                root.destroy()
+                os.system("python3 win-lin.py")
 
 def new_file_key(event):
     new_file()
