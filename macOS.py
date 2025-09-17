@@ -373,12 +373,9 @@ def open_df_fonts():
 def open_keybinds():
     web.open("https://github.com/therealzakie/pyText/blob/master/documentation/keybinds/keybinds_windows_linux.md", new = 2)
 
-# Basic text editor and scroll-bar
+# Basic text editor
 
-scroll_bar = CTkScrollbar(root)
-scroll_bar.pack(side = RIGHT, fill = Y)
-
-text = CTkTextbox(root, yscrollcommand = scroll_bar.set, undo = True, font = (current_font, current_font_size))
+text = CTkTextbox(root, undo = True, font = (current_font, current_font_size))
 text.bind("<<Modified>>", on_text_change)
 fonter = CTkFont()
 if current_tab_size == "1":
@@ -415,8 +412,6 @@ else:
     root.destroy()
 text.configure(tabs = tab)
 text.pack(fill = BOTH, expand = True)
-
-scroll_bar.configure(command = text.yview)
 
 # Menu Bar
 
