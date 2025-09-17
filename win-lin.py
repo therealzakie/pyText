@@ -1,6 +1,6 @@
 from customtkinter import *
 from CTkMessagebox import *
-from tkinter import filedialog, Menu, font, TkVersion
+from tkinter import filedialog, font, TkVersion
 import webbrowser as web
 import platform
 import sys
@@ -18,7 +18,6 @@ with open("settings/theme/current_theme.txt") as theme_file:
 with open("settings/theme/current_colour_scheme.txt") as colour_file:
     colour_scheme = colour_file.read()
     set_default_color_theme(colour_scheme)
-    
     print(f"DEBUG --- Current Colour Scheme is {colour_scheme}.")
 
 with open("settings/font/current_font.txt") as font_file:
