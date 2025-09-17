@@ -298,7 +298,7 @@ def close_pyText():
     if save_delete_used == False:
         CTkMessagebox(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Control+D' and then close pyText.")
     else:
-        close_question = CTkMessagebox(title = "Would you like to close pyText?", message = "Would you like to close pyText?", icon="question", option_1="Cancel", option_2="No", option_3="Yes")
+        close_question = CTkMessagebox(title = "Would you like to close pyText?", message = "Would you like to close pyText?", icon="question", option_1="No", option_2="Yes")
         if close_question.get() == "Yes":
             root.quit()
         else:
@@ -308,19 +308,22 @@ def opening_file_key(event):
     open_file()
 
 def open_file():
-    global file_path
-    file_path = filedialog.askopenfilename()
-    try:
-        with open(file_path, "r") as file:
-            text.insert("1.0", file.read())
-            global save_path
-            save_path = file_path
-    except IsADirectoryError:
-        CTkMessagebox(title = "Error", message = "You have selected a directory as your file, please try again")
-        open_file()
-    except:
-        CTkMessagebox(title = "Error", message = "An unknown error occurred, please try again.")
-        return
+    if save_delete_used == True:
+        global file_path
+        file_path = filedialog.askopenfilename()
+        try:
+            with open(file_path, "r") as file:
+                text.insert("1.0", file.read())
+                global save_path
+                save_path = file_path
+        except IsADirectoryError:
+            CTkMessagebox(title = "Error", message = "You have selected a directory as your file, please try again")
+            open_file()
+        except:
+            CTkMessagebox(title = "Error", message = "An unknown error occurred, please try again.")
+            return
+    else:
+        CTkMessagebox(title = "Warning", message = "Please save before opening a new file.", icon = "warning")
 
 def saving_key(event):
     save_file()
@@ -328,9 +331,9 @@ def saving_key(event):
 def save_file():
     try:
         with open(save_path, "w") as file:
-                file.write(text.get("1.0", END))
-                global save_delete_used
-                save_delete_used = True
+            file.write(text.get("1.0", END))
+            global save_delete_used
+            save_delete_used = True
     except:
         save_as_file()
 
@@ -383,25 +386,25 @@ def new_file():
         text.delete("1.0", END)
 
 def open_source():
-    web.open("https://github.com/therealzakie/pyText", new = 2)
+    web.open("https://github.com/therealzakie/pyText", new = 1)
 
 def open_source_key(event):
     open_source()
 
 def open_readme():
-    web.open("https://github.com/therealzakie/pyText/blob/master/README.md", new = 2)
+    web.open("https://github.com/therealzakie/pyText/blob/master/README.md", new = 1)
 
 def open_df_closing_safety():
-    web.open("https://github.com/therealzakie/pyText/blob/master/documentation/features/closingsafety.md", new = 2)
+    web.open("https://github.com/therealzakie/pyText/blob/master/documentation/features/closingsafety.md", new = 1)
 
 def open_df_themes():
-    web.open("https://github.com/therealzakie/pyText/blob/master/documentation/features/themes.md", new = 2)
+    web.open("https://github.com/therealzakie/pyText/blob/master/documentation/features/themes.md", new = 1)
 
 def open_df_fonts():
-    web.open("https://github.com/therealzakie/pyText/blob/master/documentation/features/font.md", new = 2)
+    web.open("https://github.com/therealzakie/pyText/blob/master/documentation/features/font.md", new = 1)
 
 def open_keybinds():
-    web.open("https://github.com/therealzakie/pyText/blob/master/documentation/keybinds/keybinds_windows_linux.md", new = 2)
+    web.open("https://github.com/therealzakie/pyText/blob/master/documentation/keybinds/keybinds_windows_linux.md", new = 1)
 
 # MenuBar
 
@@ -416,7 +419,7 @@ if platform.system() == "Windows":
     file_dropdown.add_separator()
     file_dropdown.add_option(option = "Save (Ctrl+S)", command = save_file)
     file_dropdown.add_option(option = "Save as (Alt+S)", command = save_as_file)
-    file_dropdown.add_option(option = "Discard File (Ctrl+D)", command = discard_file)
+    file_dropdown.add_option(option = "Discard File (Alt+D)", command = discard_file)
 
     edit_btn = menu.add_cascade("Edit")
     edit_dropdown = CustomDropdownMenu(widget = edit_btn)
@@ -453,7 +456,7 @@ else:
     file_dropdown.add_separator()
     file_dropdown.add_option(option = "Save (Ctrl+S)", command = save_file)
     file_dropdown.add_option(option = "Save as (Alt+S)", command = save_as_file)
-    file_dropdown.add_option(option = "Discard File (Ctrl+D)", command = discard_file)
+    file_dropdown.add_option(option = "Discard File (Alt+D)", command = discard_file)
 
     edit_btn = menu.add_cascade("Edit")
     edit_dropdown = CustomDropdownMenu(widget = edit_btn)
@@ -525,7 +528,7 @@ root.bind("<Control-n>", new_file_key)
 root.bind("<Control-o>", opening_file_key)
 root.bind("<Control-s>", saving_key)
 root.bind("<Alt-s>", saving_as_key)
-root.bind("<Control-d>", discard_key)
+root.bind("<Alt-d>", discard_key)
 root.bind("<Control-g>", open_source_key)
 root.bind("<Control-,>", settings_key)
 root.bind("<Control-w>", when_closing)
