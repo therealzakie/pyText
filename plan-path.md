@@ -19,6 +19,10 @@
 
 ## Upcoming
 
-- Multiple Windows
-- Multiple Tabs
 - Secrets 👀
+
+## Ideas that are not possible with my time
+
+- ~~Multiple Windows~~
+- ~~Multiple Tabs~~
+- ~~.pytext files~~
