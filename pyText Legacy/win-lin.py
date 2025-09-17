@@ -226,7 +226,7 @@ def when_closing(event):
 
 def when_X_clicked():
     if save_delete_used == False:
-        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText Legacy! If you would like to continue, press 'Control+D' and then close pyText Legacy.")
+        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText Legacy! If you would like to continue, press 'Alt+D' and then close pyText Legacy.")
     else:
         close_pyText()
 
@@ -300,7 +300,7 @@ def on_text_change(event):
 
 def close_pyText():
     if save_delete_used == False:
-        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText Legacy! If you would like to continue, press 'Control+D' and then close pyText Legacy.")
+        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText Legacy! If you would like to continue, press 'Alt+D' and then close pyText Legacy.")
     else:
         close_question = messagebox.askquestion(title = "Would you like to close pyText Legacy?", message = "Would you like to close pyText Legacy?", icon = "question")
         if close_question == "yes":

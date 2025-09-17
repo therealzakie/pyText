@@ -105,7 +105,7 @@ def when_closing(event):
 
 def when_X_clicked():
     if save_delete_used == False:
-        CTkMessagebox(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Control+D' and then close pyText.")
+        CTkMessagebox(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Alt+D' and then close pyText.")
     else:
         close_pyText()
 
@@ -296,7 +296,7 @@ def on_text_change(event):
 
 def close_pyText():
     if save_delete_used == False:
-        CTkMessagebox(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Control+D' and then close pyText.")
+        CTkMessagebox(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Alt+D' and then close pyText.")
     else:
         close_question = CTkMessagebox(title = "Would you like to close pyText?", message = "Would you like to close pyText?", icon="question", option_1="No", option_2="Yes")
         if close_question.get() == "Yes":
@@ -406,6 +406,21 @@ def open_df_fonts():
 def open_keybinds():
     web.open("https://github.com/therealzakie/pyText/blob/master/documentation/keybinds/keybinds_windows_linux.md", new = 1)
 
+def restart_key(event):
+    restart_pyText()
+
+def restart_pyText():
+    try:
+        root.destroy()
+        os.system("python win-lin.py")
+    except:
+        try:
+            root.destroy()
+            os.system("py win-lin.py")
+        except:
+            root.destroy()
+            os.system("python3 win-lin.py")
+
 # MenuBar
 
 if platform.system() == "Windows":
@@ -443,6 +458,7 @@ if platform.system() == "Windows":
     options_btn = menu.add_cascade("Options")
     options_dropdown = CustomDropdownMenu(widget = options_btn)
     options_dropdown.add_option(option = "Settings (Ctrl+,)", command = open_settings)
+    options_dropdown.add_option(option = "Restart pyText (Alt+/)", command = restart_pyText)
     options_dropdown.add_option(option = "Close pyText (Ctrl+W)", command = close_pyText)
 
 else:
@@ -480,6 +496,7 @@ else:
     options_btn = menu.add_cascade("Options")
     options_dropdown = CustomDropdownMenu(widget = options_btn)
     options_dropdown.add_option(option = "Settings (Ctrl+,)", command = open_settings)
+    options_dropdown.add_option(option = "Restart pyText (Alt+/)", command = restart_pyText)
     options_dropdown.add_option(option = "Close pyText (Ctrl+W)", command = close_pyText)
 
 # Basic text editor
@@ -531,6 +548,7 @@ root.bind("<Alt-s>", saving_as_key)
 root.bind("<Alt-d>", discard_key)
 root.bind("<Control-g>", open_source_key)
 root.bind("<Control-,>", settings_key)
+root.bind("<Alt-/>", restart_key)
 root.bind("<Control-w>", when_closing)
 
 root.protocol("WM_DELETE_WINDOW", when_X_clicked)

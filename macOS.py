@@ -395,6 +395,21 @@ def open_df_fonts():
 def open_keybinds():
     web.open("https://github.com/therealzakie/pyText/blob/master/documentation/keybinds/keybinds_windows_linux.md", new = 2)
 
+def restart_key(event):
+    restart_pyText()
+
+def restart_pyText():
+    try:
+        root.destroy()
+        os.system("python win-lin.py")
+    except:
+        try:
+            root.destroy()
+            os.system("py win-lin.py")
+        except:
+            root.destroy()
+            os.system("python3 win-lin.py")
+
 # Basic text editor
 
 text = CTkTextbox(root, undo = True, font = (current_font, current_font_size))
@@ -472,6 +487,7 @@ menu_bar.add_cascade(label = "Documentation", menu = docs_menu)
 
 options_menu = Menu(menu_bar, tearoff = False)
 options_menu.add_command(label = "pyText Settings", command = open_settings, accelerator = "Cmd+/")
+options_menu.add_command(label = "Restart pyText", command = restart_pyText, accelerator = "Ctrl+/")
 options_menu.add_command(label = "Close pyText", command = close_pyText, accelerator = "Cmd+W")
 menu_bar.add_cascade(label = "Options", menu = options_menu)
 
@@ -484,6 +500,7 @@ root.bind("<Control-s>", saving_as_key)
 root.bind("<Control-d>", discard_key)
 root.bind("<Command-g>", open_source_key)
 root.bind("<Command-/>", settings_key)
+root.bind("<Control-/>", restart_key)
 root.bind("<Command-w>", when_closing)
 
 root.protocol("WM_DELETE_WINDOW", when_X_clicked)
