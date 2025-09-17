@@ -44,7 +44,7 @@ if window_size == "Full Screen":
 else:
     root.geometry(window_size)
 root.minsize(height = 100, width = 100)
-root.title("pyText")
+root.title("pyText Legacy")
 
 light_main = "#ffffff"
 light_alt0 = "#c3c3c3"
@@ -110,19 +110,19 @@ def themes_page():
         with open("settings/theme/current_theme.txt", "w") as theme_file:
             new_theme = f"{ct_option_current_option.get()}"
             theme_file.write(new_theme)
-            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the theme.")
+            messagebox.showinfo(title = "Completed", message = "Restart pyText Legacy to change the theme.")
 
     def confirm_tab_size():
         with open("settings/theme/current_tab_size.txt", "w") as tab_file:
             new_tab_size = f"{ct_option_current_option1.get()}"
             tab_file.write(new_tab_size)
-            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the tab size.")
+            messagebox.showinfo(title = "Completed", message = "Restart pyText Legacy to change the tab size.")
 
     def confirm_window_size():
         with open("settings/window/window_size.txt", "w") as win_file:
             new_window_size = f"{ct_option_current_option2.get()}"
             win_file.write(new_window_size)
-            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the window size.")
+            messagebox.showinfo(title = "Completed", message = "Restart pyText Legacy to change the window size.")
         
     ct_option_options = ["light", "dark"]
     ct_option_options1 = []
@@ -184,12 +184,12 @@ def fonts_page():
         with open("settings/font/current_font.txt", "w") as font_file:
             new_font = f"{ct_option_current_option.get()}"
             font_file.write(new_font)
-            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the font.")
+            messagebox.showinfo(title = "Completed", message = "Restart pyText Legacy to change the font.")
     def confirm_font_size():
         with open("settings/font/current_font_size.txt", "w") as font_file:
             new_font_size = f"{ct_entry.get()}"
             font_file.write(new_font_size)
-            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the font size.")
+            messagebox.showinfo(title = "Completed", message = "Restart pyText Legacy to change the font size.")
     ct_option_options = font.families()
     ct_list_options = []
     for fonterson in ct_option_options:
@@ -229,7 +229,7 @@ def when_closing(event):
 
 def when_X_clicked():
     if save_delete_used == False:
-        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Command+Q'.")
+        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText Legacy! If you would like to continue, press 'Command+Q'.")
     else:
         close_pyText()
 
@@ -238,7 +238,7 @@ def settings_key(event):
 
 def open_settings():
     settings_menu = Toplevel(root)
-    settings_menu.title("pyText Settings")
+    settings_menu.title("pyText Legacy Settings")
     settings_menu.geometry("500x300")
     settings_menu.resizable(False, False)
 
@@ -304,9 +304,9 @@ def on_text_change(event):
 
 def close_pyText():
     if save_delete_used == False:
-        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Command+Q'.")
+        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText Legacy! If you would like to continue, press 'Command+Q'.")
     else:
-        close_question = messagebox.askquestion(title = "Would you like to close pyText?", message = "Would you like to close pyText?", icon = "question")
+        close_question = messagebox.askquestion(title = "Would you like to close pyText Legacy?", message = "Would you like to close pyText Legacy?", icon = "question")
         if close_question == "yes":
             root.quit()
         else:
@@ -382,25 +382,25 @@ def new_file():
         text.delete("1.0", END)
 
 def open_source():
-    web.open("https://github.com/therealzakie/pyText", new = 2)
+    web.open("https://github.com/therealzakie/pyText Legacy", new = 2)
 
 def open_source_key(event):
     open_source()
 
 def open_readme():
-    web.open("https://github.com/therealzakie/pyText/blob/master/README.md", new = 2)
+    web.open("https://github.com/therealzakie/pyText Legacy/blob/master/README.md", new = 2)
 
 def open_df_closing_safety():
-    web.open("https://github.com/therealzakie/pyText/blob/master/documentation/features/closingsafety.md", new = 2)
+    web.open("https://github.com/therealzakie/pyText Legacy/blob/master/documentation/features/closingsafety.md", new = 2)
 
 def open_df_themes():
-    web.open("https://github.com/therealzakie/pyText/blob/master/documentation/features/themes.md", new = 2)
+    web.open("https://github.com/therealzakie/pyText Legacy/blob/master/documentation/features/themes.md", new = 2)
 
 def open_df_fonts():
-    web.open("https://github.com/therealzakie/pyText/blob/master/documentation/features/font.md", new = 2)
+    web.open("https://github.com/therealzakie/pyText Legacy/blob/master/documentation/features/font.md", new = 2)
 
 def open_keybinds():
-    web.open("https://github.com/therealzakie/pyText/blob/master/documentation/keybinds/keybinds_mac.md", new = 2)
+    web.open("https://github.com/therealzakie/pyText Legacy/blob/master/documentation/keybinds/keybinds_mac.md", new = 2)
 
 # Basic text editor and scroll-bar
 
@@ -484,8 +484,8 @@ docs_menu.add_command(label = "Keybinds", command = open_keybinds)
 menu_bar.add_cascade(label = "Documentation", menu = docs_menu)
 
 options_menu = Menu(menu_bar, tearoff = False)
-options_menu.add_command(label = "pyText Setttings", command = open_settings, accelerator = "Cmd+/")
-options_menu.add_command(label = "Close pyText", command = close_pyText, accelerator = "Cmd+W")
+options_menu.add_command(label = "pyText Legacy Setttings", command = open_settings, accelerator = "Cmd+/")
+options_menu.add_command(label = "Close pyText Legacy", command = close_pyText, accelerator = "Cmd+W")
 menu_bar.add_cascade(label = "Options", menu = options_menu)
 
 # Keyboard Shortcuts

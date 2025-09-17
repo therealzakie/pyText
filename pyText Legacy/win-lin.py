@@ -16,23 +16,23 @@ import webbrowser as web
 global save_delete_used
 save_delete_used = True
 
-with open("../settings/theme/current_theme.txt") as theme_file:
+with open("settings/theme/current_theme.txt") as theme_file:
     theme = theme_file.read()
     print(f"DEBUG --- Current theme is {theme}.")
 
-with open("../settings/font/current_font.txt") as font_file:
+with open("settings/font/current_font.txt") as font_file:
     current_font = font_file.read()
     print(f"DEBUG --- Current font is {current_font}.")
 
-with open("../settings/font/current_font_size.txt") as font_file:
+with open("settings/font/current_font_size.txt") as font_file:
     current_font_size = font_file.read()
     print(f"DEBUG --- Current font size is {current_font_size}.")
 
-with open("../settings/theme/current_tab_size.txt") as tab_file:
+with open("settings/theme/current_tab_size.txt") as tab_file:
     current_tab_size = tab_file.read()
     print(f"DEBUG --- Current tab size is {current_tab_size}.")
 
-with open("../settings/window/window_size.txt") as window_file:
+with open("settings/window/window_size.txt") as window_file:
     window_size = window_file.read()
     print(f"DEBUG --- Current window size is {window_size}.")
 
@@ -44,21 +44,21 @@ if window_size == "Full Screen":
 else:
     root.geometry(window_size)
 root.minsize(height = 100, width = 100)
-root.title("pyText")
+root.title("pyText Legacy")
 
 light_main = "#ffffff"
 light_alt0 = "#c3c3c3"
 light_alt1 = "#1c1c1c"
 light_text = "#000000" 
-light_window = "../themes/light/window.png"
-light_font = "../themes/light/font.png"
+light_window = "themes/light/window.png"
+light_font = "themes/light/font.png"
 
 dark_main = "#333333"
 dark_alt0 = "#222222"
 dark_alt1 = "#8c8c8c"
 dark_text = "#ffffff"
-dark_window = "../themes/dark/window.png"
-dark_font = "../themes/dark/font.png"
+dark_window = "themes/dark/window.png"
+dark_font = "themes/dark/font.png"
 
 tab1 = " "
 tab2 = "  "
@@ -105,19 +105,19 @@ root.config(bg = ct_main)
 
 def themes_page():
     def comfirm_theme():
-        with open("../settings/theme/current_theme.txt", "w") as theme_file:
+        with open("settings/theme/current_theme.txt", "w") as theme_file:
             new_theme = f"{ct_option_current_option.get()}"
             theme_file.write(new_theme)
             messagebox.showinfo(title = "Completed", message = "Restart pyText to change the theme.")
 
     def confirm_tab_size():
-        with open("../settings/theme/current_tab_size.txt", "w") as tab_file:
+        with open("settings/theme/current_tab_size.txt", "w") as tab_file:
             new_tab_size = f"{ct_option_current_option1.get()}"
             tab_file.write(new_tab_size)
             messagebox.showinfo(title = "Completed", message = "Restart pyText to change the tab size.")
 
     def confirm_window_size():
-        with open("../settings/window/window_size.txt", "w") as win_file:
+        with open("settings/window/window_size.txt", "w") as win_file:
             new_window_size = f"{ct_option_current_option2.get()}"
             win_file.write(new_window_size)
             messagebox.showinfo(title = "Completed", message = "Restart pyText to change the window size.")
@@ -179,15 +179,15 @@ def themes_page():
 
 def fonts_page():
     def confirm_font():
-        with open("../settings/font/current_font.txt", "w") as font_file:
+        with open("settings/font/current_font.txt", "w") as font_file:
             new_font = f"{ct_option_current_option.get()}"
             font_file.write(new_font)
-            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the font.")
+            messagebox.showinfo(title = "Completed", message = "Restart pyText Legacy to change the font.")
     def confirm_font_size():
-        with open("../settings/font/current_font_size.txt", "w") as font_file:
+        with open("settings/font/current_font_size.txt", "w") as font_file:
             new_font_size = f"{ct_entry.get()}"
             font_file.write(new_font_size)
-            messagebox.showinfo(title = "Completed", message = "Restart pyText to change the font size.")
+            messagebox.showinfo(title = "Completed", message = "Restart pyText Legacy to change the font size.")
     ct_option_options = font.families()
     ct_list_options = []
     for fonterson in ct_option_options:
@@ -226,7 +226,7 @@ def when_closing(event):
 
 def when_X_clicked():
     if save_delete_used == False:
-        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Control+D' and then close pyText.")
+        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText Legacy! If you would like to continue, press 'Control+D' and then close pyText Legacy.")
     else:
         close_pyText()
 
@@ -235,7 +235,7 @@ def settings_key(event):
 
 def open_settings():
     settings_menu = Toplevel(root)
-    settings_menu.title("pyText Settings")
+    settings_menu.title("pyText Legacy Settings")
     settings_menu.geometry("500x300")
     settings_menu.resizable(False, False)
 
@@ -300,9 +300,9 @@ def on_text_change(event):
 
 def close_pyText():
     if save_delete_used == False:
-        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText! If you would like to continue, press 'Control+D' and then close pyText.")
+        messagebox.showwarning(title = "Save first!", message = "Save your document before closing pyText Legacy! If you would like to continue, press 'Control+D' and then close pyText Legacy.")
     else:
-        close_question = messagebox.askquestion(title = "Would you like to close pyText?", message = "Would you like to close pyText?", icon = "question")
+        close_question = messagebox.askquestion(title = "Would you like to close pyText Legacy?", message = "Would you like to close pyText Legacy?", icon = "question")
         if close_question == "yes":
             root.quit()
         else:
@@ -480,7 +480,7 @@ docs_menu.add_command(label = "Keybinds", command = open_keybinds)
 menu_bar.add_cascade(label = "Documentation", menu = docs_menu)
 
 options_menu = Menu(menu_bar, tearoff = False)
-options_menu.add_command(label = "pyText Setttings", command = open_settings, accelerator = "Ctrl+/")
+options_menu.add_command(label = "pyText Setttings", command = open_settings, accelerator = "Ctrl+,")
 options_menu.add_command(label = "Close pyText", command = close_pyText, accelerator = "Ctrl+W")
 menu_bar.add_cascade(label = "Options", menu = options_menu)
 
@@ -492,7 +492,7 @@ root.bind("<Control-s>", saving_key)
 root.bind("<Alt-s>", saving_as_key)
 root.bind("<Control-d>", discard_key)
 root.bind("<Control-g>", open_source_key)
-root.bind("<Control-/>", settings_key)
+root.bind("<Control-,>", settings_key)
 root.bind("<Control-w>", when_closing)
 
 root.protocol("WM_DELETE_WINDOW", when_X_clicked)
