@@ -421,6 +421,30 @@ def restart_pyText():
             root.destroy()
             os.system("python3 win-lin.py")
 
+def find_text_key(event):
+    find_text()
+
+def find_text():
+    def confirm_find():
+        input = find_entry.get()
+        text.tag_config("found", background = "yellow", foreground = "black")
+        text.tag_remove("found", "1.0", END)
+        start_ind = "1.0"
+        while True:
+            start_ind = text.search(input, start_ind, stopindex = END)
+            if not start_ind:
+                break
+            last_ind = f"{start_ind}+{len(input)}c"
+            text.tag_add("found", start_ind, last_ind)
+            start_ind = last_ind
+        
+    find_window = CTkToplevel(root)
+    find_window.title("Find Text")
+    find_window.resizable(False, False)
+    find_entry = CTkEntry(find_window, placeholder_text = "Text to find...")
+    find_entry.pack()
+    CTkButton(find_window, text = "Find", command = confirm_find).pack()
+
 # MenuBar
 
 if platform.system() == "Windows":
@@ -443,6 +467,8 @@ if platform.system() == "Windows":
     edit_dropdown.add_option(option = "Paste (Ctrl+V)", command = paste_text)
     edit_dropdown.add_separator()
     edit_dropdown.add_option(option = "Select All (Ctrl+A)", command = select_all_text)
+    edit_dropdown.add_separator()
+    edit_dropdown.add_option(option = "Find (Ctrl+F)", command = find_text)
 
     docs_btn = menu.add_cascade("Documentation")
     docs_dropdown = CustomDropdownMenu(widget = docs_btn)
@@ -481,6 +507,8 @@ else:
     edit_dropdown.add_option(option = "Paste (Ctrl+V)", command = paste_text)
     edit_dropdown.add_separator()
     edit_dropdown.add_option(option = "Select All (Ctrl+A)", command = select_all_text)
+    edit_dropdown.add_separator()
+    edit_dropdown.add_option(option = "Find (Ctrl+F)", command = find_text)
 
     docs_btn = menu.add_cascade("Documentation")
     docs_dropdown = CustomDropdownMenu(widget = docs_btn)
@@ -546,6 +574,7 @@ root.bind("<Control-o>", opening_file_key)
 root.bind("<Control-s>", saving_key)
 root.bind("<Alt-s>", saving_as_key)
 root.bind("<Alt-d>", discard_key)
+root.bind("<Control-f>", find_text_key)
 root.bind("<Control-g>", open_source_key)
 root.bind("<Control-,>", settings_key)
 root.bind("<Alt-/>", restart_key)

@@ -410,6 +410,30 @@ def restart_pyText():
             root.destroy()
             os.system("python3 win-lin.py")
 
+def find_text_key(event):
+    find_text()
+
+def find_text():
+    def confirm_find():
+        input = find_entry.get()
+        text.tag_config("found", background = "yellow", foreground = "black")
+        text.tag_remove("found", "1.0", END)
+        start_ind = "1.0"
+        while True:
+            start_ind = text.search(input, start_ind, stopindex = END)
+            if not start_ind:
+                break
+            last_ind = f"{start_ind}+{len(input)}c"
+            text.tag_add("found", start_ind, last_ind)
+            start_ind = last_ind
+        
+    find_window = CTkToplevel(root)
+    find_window.title("Find Text")
+    find_window.resizable(False, False)
+    find_entry = CTkEntry(find_window, placeholder_text = "Text to find...")
+    find_entry.pack()
+    CTkButton(find_window, text = "Find", command = confirm_find).pack()
+
 # Basic text editor
 
 text = CTkTextbox(root, undo = True, font = (current_font, current_font_size))
@@ -471,6 +495,8 @@ edit_menu.add_command(label = "Cut", command = cut_text, accelerator = "Cmd+X")
 edit_menu.add_command(label = "Paste", command = paste_text, accelerator = "Cmd+V")
 edit_menu.add_separator()
 edit_menu.add_command(label = "Select All", command = select_all_text, accelerator = "Cmd+A")
+edit_menu.add_separator()
+edit_menu.add_command(label = "Find", command = find_text, accelerator = "Cmd+F")
 menu_bar.add_cascade(label = "Edit", menu = edit_menu)
 
 docs_menu = Menu(menu_bar, tearoff = False)
@@ -498,6 +524,7 @@ root.bind("<Command-o>", opening_file_key)
 root.bind("<Command-s>", saving_key)
 root.bind("<Control-s>", saving_as_key)
 root.bind("<Control-d>", discard_key)
+root.bind("<Command-f>", find_text_key)
 root.bind("<Command-g>", open_source_key)
 root.bind("<Command-/>", settings_key)
 root.bind("<Control-/>", restart_key)
