@@ -16,11 +16,12 @@
 - ~~Converting to the customtkinter Library~~
 - ~~Fancy new MenuBar!~~
 - ~~Colour Themes~~
+- ~~Finding text function~~
+- ~~Replacing text function~~
 
 ## Upcoming
 
-- Finding text function
-- Replacing text function
+- Custom Keybinds
 - Secrets 👀
 
 ## Ideas that are not possible with my time

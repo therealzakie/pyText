@@ -410,16 +410,19 @@ def restart_key(event):
     restart_pyText()
 
 def restart_pyText():
-    try:
-        root.destroy()
-        os.system("python win-lin.py")
-    except:
+    if save_delete_used == True:
         try:
             root.destroy()
-            os.system("py win-lin.py")
+            os.system("python win-lin.py")
         except:
-            root.destroy()
-            os.system("python3 win-lin.py")
+            try:
+                root.destroy()
+                os.system("py win-lin.py")
+            except:
+                root.destroy()
+                os.system("python3 win-lin.py")
+    else:
+        CTkMessagebox(icon = "warning", title = "Save/discard before restart!", message = "You must save/discard your file before restarting pyText!")
 
 def find_text_key(event):
     find_text()
