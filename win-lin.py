@@ -445,6 +445,35 @@ def find_text():
     find_entry.pack()
     CTkButton(find_window, text = "Find", command = confirm_find).pack()
 
+def replace_text_key(event):
+    replace_text()
+
+def replace_text():
+    def confirm_replace():
+        old_text = find_entry.get()
+        new_text = replace_entry.get()
+        text.tag_config("found", background = "yellow", foreground = "black")
+        text.tag_remove("found", "1.0", END)
+        start_ind = "1.0"
+        while True:
+            start_ind = text.search(old_text, start_ind, stopindex = END)
+            if not start_ind:
+                break
+            last_ind = f'{start_ind}+{len(new_text)}c'
+            text.delete(start_ind, last_ind)
+            text.insert(start_ind, new_text)
+            start_ind = f'{start_ind}+{len(new_text)}c'
+        
+    
+    replace_window = CTkToplevel(root)
+    replace_window.title("Replace Text")
+    replace_window.resizable(False, False)
+    find_entry = CTkEntry(replace_window, placeholder_text = "Text to find...")
+    replace_entry = CTkEntry(replace_window, placeholder_text = "Text to replace with...")
+    find_entry.pack()
+    replace_entry.pack()
+    CTkButton(replace_window, text = "Find & Replace", command = confirm_replace).pack()
+
 # MenuBar
 
 if platform.system() == "Windows":
@@ -469,6 +498,7 @@ if platform.system() == "Windows":
     edit_dropdown.add_option(option = "Select All (Ctrl+A)", command = select_all_text)
     edit_dropdown.add_separator()
     edit_dropdown.add_option(option = "Find (Ctrl+F)", command = find_text)
+    edit_dropdown.add_option(option = "Replace (Ctrl+R)", command = replace_text)
 
     docs_btn = menu.add_cascade("Documentation")
     docs_dropdown = CustomDropdownMenu(widget = docs_btn)
@@ -509,6 +539,7 @@ else:
     edit_dropdown.add_option(option = "Select All (Ctrl+A)", command = select_all_text)
     edit_dropdown.add_separator()
     edit_dropdown.add_option(option = "Find (Ctrl+F)", command = find_text)
+    edit_dropdown.add_option(option = "Replace (Ctrl+R)", command = replace_text)
 
     docs_btn = menu.add_cascade("Documentation")
     docs_dropdown = CustomDropdownMenu(widget = docs_btn)
@@ -575,6 +606,7 @@ root.bind("<Control-s>", saving_key)
 root.bind("<Alt-s>", saving_as_key)
 root.bind("<Alt-d>", discard_key)
 root.bind("<Control-f>", find_text_key)
+root.bind("<Control-r>", replace_text_key)
 root.bind("<Control-g>", open_source_key)
 root.bind("<Control-,>", settings_key)
 root.bind("<Alt-/>", restart_key)

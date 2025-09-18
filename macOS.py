@@ -434,6 +434,35 @@ def find_text():
     find_entry.pack()
     CTkButton(find_window, text = "Find", command = confirm_find).pack()
 
+def replace_text_key(event):
+    replace_text()
+
+def replace_text():
+    def confirm_replace():
+        old_text = find_entry.get()
+        new_text = replace_entry.get()
+        text.tag_config("found", background = "yellow", foreground = "black")
+        text.tag_remove("found", "1.0", END)
+        start_ind = "1.0"
+        while True:
+            start_ind = text.search(old_text, start_ind, stopindex = END)
+            if not start_ind:
+                break
+            last_ind = f'{start_ind}+{len(new_text)}c'
+            text.delete(start_ind, last_ind)
+            text.insert(start_ind, new_text)
+            start_ind = f'{start_ind}+{len(new_text)}c'
+        
+    
+    replace_window = CTkToplevel(root)
+    replace_window.title("Replace Text")
+    replace_window.resizable(False, False)
+    find_entry = CTkEntry(replace_window, placeholder_text = "Text to find...")
+    replace_entry = CTkEntry(replace_window, placeholder_text = "Text to replace with...")
+    find_entry.pack()
+    replace_entry.pack()
+    CTkButton(replace_window, text = "Find & Replace", command = confirm_replace).pack()
+
 # Basic text editor
 
 text = CTkTextbox(root, undo = True, font = (current_font, current_font_size))
@@ -497,6 +526,7 @@ edit_menu.add_separator()
 edit_menu.add_command(label = "Select All", command = select_all_text, accelerator = "Cmd+A")
 edit_menu.add_separator()
 edit_menu.add_command(label = "Find", command = find_text, accelerator = "Cmd+F")
+edit_menu.add_command(label = "Replace", command = replace_text, accelerator = "Cmd+R")
 menu_bar.add_cascade(label = "Edit", menu = edit_menu)
 
 docs_menu = Menu(menu_bar, tearoff = False)
@@ -525,6 +555,7 @@ root.bind("<Command-s>", saving_key)
 root.bind("<Control-s>", saving_as_key)
 root.bind("<Control-d>", discard_key)
 root.bind("<Command-f>", find_text_key)
+root.bind("<Command-r>", replace_text_key)
 root.bind("<Command-g>", open_source_key)
 root.bind("<Command-/>", settings_key)
 root.bind("<Control-/>", restart_key)

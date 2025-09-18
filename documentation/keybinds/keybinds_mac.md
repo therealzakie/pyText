@@ -10,7 +10,8 @@
 - Cmd + X - Copy selected text and remove it 
 - Cmd + V - Pastes copied text 
 - Cmd + A - Select all text in document 
-- Cmd + F - Find text in docment
+- Cmd + F - Find text in document
+- Cmd + R - Replace old text with new text in document
 
 - Cmd + G - Open pyText's source code
 
