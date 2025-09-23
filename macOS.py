@@ -91,7 +91,7 @@ tab13 = "             "
 tab14 = "              "
 tab15 = "               "
 
-pyText_version = "1.1.0 customtkinter build"
+pyText_version = "1.1.2 customtkinter build"
 
 if theme == "dark":
     root._set_appearance_mode("dark")
@@ -657,6 +657,7 @@ def open_file():
         file_path = filedialog.askopenfilename()
         try:
             with open(file_path, "r") as file:
+                text.delete("1.0", END)
                 text.insert("1.0", file.read())
                 global save_path
                 save_path = file_path
