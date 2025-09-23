@@ -671,6 +671,7 @@ def open_file():
         file_path = filedialog.askopenfilename()
         try:
             with open(file_path, "r") as file:
+                text.delete("1.0", END)
                 text.insert("1.0", file.read())
                 global save_path
                 save_path = file_path
