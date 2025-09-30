@@ -73,7 +73,8 @@ else:
     root.geometry(window_size)
 root.minsize(height = 100, width = 100)
 root.wm_title("pyText - Untitled.txt")
-root.iconbitmap("favicon.ico")
+if platform.system() == "Windows":
+    root.iconbitmap("favicon.ico")
 
 tab1 = " "
 tab2 = "  "
@@ -91,7 +92,7 @@ tab13 = "             "
 tab14 = "              "
 tab15 = "               "
 
-pyText_version = "1.1.2 customtkinter build"
+pyText_version = "1.1.3 customtkinter build"
 
 if theme == "dark":
     root._set_appearance_mode("dark")
@@ -450,7 +451,11 @@ def open_settings():
 
         # Edit
 
-        global findtext_var, replacetext_var
+        global copytext_var, cuttext_var, pastetext_var, selectall_var, findtext_var, replacetext_var
+        copytext_var = StringVar(root)
+        cuttext_var = StringVar(root)
+        pastetext_var = StringVar(root)
+        selectall_var = StringVar(root)
         findtext_var = StringVar(root)
         replacetext_var = StringVar(root)
 
@@ -724,14 +729,14 @@ def discard_file():
         save_delete_used = True
         try:
             root.destroy()
-            os.system("python win-lin.py")
+            os.system("python3 win-lin.py")
         except:
             try:
                 root.destroy()
                 os.system("py win-lin.py")
             except:
                 root.destroy()
-                os.system("python3 win-lin.py")
+                os.system("python win-lin.py")
 
 def new_file_key(event):
     new_file()
@@ -774,14 +779,14 @@ def restart_pyText():
     if save_delete_used == True:
         try:
             root.destroy()
-            os.system("python win-lin.py")
+            os.system("python3 win-lin.py")
         except:
             try:
                 root.destroy()
                 os.system("py win-lin.py")
             except:
                 root.destroy()
-                os.system("python3 win-lin.py")
+                os.system("python win-lin.py")
     else:
         CTkMessagebox(icon = "warning", title = "Save/discard before restart!", message = "You must save/discard your file before restarting pyText!")
 

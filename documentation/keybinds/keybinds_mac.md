@@ -1,5 +1,7 @@
 # Keybinds (macOS)
 
+> You will need to have the default keybind configuration in order for these to apply.
+
 - Cmd + N - New file 
 - Cmd + O - Open file 
 - Cmd + S - Save file 
@@ -15,6 +17,6 @@
 
 - Cmd + G - Open pyText's source code
 
-- Cmd + , - Open pyText settings
-- Ctrl + / - Restart pyText
+- Cmd + / - Open pyText settings
+- Ctrl + W - Restart pyText
 - Cmd + W - Close pyText 

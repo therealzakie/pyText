@@ -18,14 +18,14 @@
 - ~~Colour Themes~~
 - ~~Finding text function~~
 - ~~Replacing text function~~
+- ~~Custom Keybinds~~
 
 ## Upcoming
 
-- Custom Keybinds
-- Secrets 👀
+- Custom Theme Maker
+- .pytext files
 
 ## Ideas that are not possible with my time
 
 - ~~Multiple Windows~~
 - ~~Multiple Tabs~~
-- ~~.pytext files~~

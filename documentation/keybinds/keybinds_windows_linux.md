@@ -1,5 +1,7 @@
 # Keybinds (Windows/Linux)
 
+> You will need to have the default keybind configuration in order for these to apply.
+
 - Ctrl + N - New file 
 - Ctrl + O - Open file 
 - Ctrl + S - Save file 
@@ -15,6 +17,6 @@
 
 - Ctrl + G - Open pyText's source code
 
-- Ctrl + , - Open pyText settings
-- Alt + / - Restart pyText
+- Ctrl + L - Open pyText settings
+- Alt + W - Restart pyText
 - Ctrl + W - Close pyText 
