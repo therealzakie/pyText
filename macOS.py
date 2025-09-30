@@ -73,7 +73,6 @@ else:
     root.geometry(window_size)
 root.minsize(height = 100, width = 100)
 root.wm_title("pyText - Untitled.txt")
-root.iconbitmap("favicon.icns")
 
 tab1 = " "
 tab2 = "  "
